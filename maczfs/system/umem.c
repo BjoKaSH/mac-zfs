@@ -82,7 +82,8 @@ void umem_free(void *mem, size_t _)
 /* umem_zalloc(size_t size, int flags) */
 void *umem_zalloc(size_t size, int _) 
 {
-	return malloc(size);
+	void *p = malloc(size);
+	return p;
 }
 
 umem_cache_t *
@@ -159,13 +160,16 @@ void *umem_cache_alloc(umem_cache_t *cp, int umflag) {
 				exit(UMEM_CALLBACK_EXIT(255));
 			}
 
-			if (cp->cache_constructor)
-				cp->cache_constructor(buf, cp->cache_private, UMEM_DEFAULT);
-			cp->cache_objcount++;
 		}
-		/* reached if (1) got our memory, or (2) ran out of memory and
-		   were allowed to fail. */
+		/* reached if (1) got our memory by recursive call to this function,
+		   or (2) ran out of memory and were allowed to fail. */
+		return buf;
 	}
+
+	if (cp->cache_constructor)
+		cp->cache_constructor(buf, cp->cache_private, UMEM_DEFAULT);
+	cp->cache_objcount++;
+
 	return buf;
 }
 
