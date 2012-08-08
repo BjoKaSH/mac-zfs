@@ -2267,6 +2267,7 @@ zpool_get_prop_int(zpool_handle_t *zhp, zpool_prop_t prop)
 
 	switch (prop) {
 	case ZPOOL_PROP_AUTOREPLACE:
+	case ZPOOL_PROP_ASHIFT:
 		if (nvlist_lookup_nvlist(zhp->zpool_props,
 		    zpool_prop_to_name(prop), &nvp) != 0) {
 			value = zpool_prop_default_numeric(prop);
@@ -2347,6 +2348,21 @@ zpool_get_prop(zpool_handle_t *zhp, zpool_prop_t prop, char *propbuf,
 		(void) strlcpy(propbuf, value ? "on" : "off", proplen);
 		break;
 
+	case ZPOOL_PROP_ASHIFT:
+		if (nvlist_lookup_nvlist(zhp->zpool_props,
+		    zpool_prop_to_name(prop), &nvp) != 0) {
+			value = zpool_prop_default_numeric(prop);
+			src = ZFS_SRC_DEFAULT;
+		} else {
+			VERIFY(nvlist_lookup_uint64(nvp,
+			    ZFS_PROP_SOURCE, &value) == 0);
+			src = value;
+			VERIFY(nvlist_lookup_uint64(nvp, ZFS_PROP_VALUE,
+			    &value) == 0);
+		}
+		(void) snprintf(propbuf, proplen, "%llu", value);
+		break;
+  
 	default:
 		return (-1);
 	}
