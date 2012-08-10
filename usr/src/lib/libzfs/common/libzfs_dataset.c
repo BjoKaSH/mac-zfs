@@ -1036,6 +1036,26 @@ zfs_validate_properties(libzfs_handle_t *hdl, zfs_type_t type, char *pool_name,
 
 			break;
 #endif /* !__APPLE__ */
+
+		case ZPOOL_PROP_ASHIFT:
+			if (zhp != NULL) {
+				zfs_error_aux(hdl, dgettext(TEXT_DOMAIN,
+				    "property '%s' can only be set at "
+				    "creation time"), propname);
+				(void) zfs_error(hdl, EZFS_BADPROP, errbuf);
+				goto error;
+			}
+
+			if (intval != 0 && (intval < 9 || intval > 17)) {
+				zfs_error_aux(hdl, dgettext(TEXT_DOMAIN,
+				    "property '%s' number %d is invalid."),
+				    propname, intval);
+				(void) zfs_error(hdl, EZFS_BADPROP, errbuf);
+				goto error;
+			}
+
+			break;
+
 		case ZPOOL_PROP_BOOTFS:
 			/*
 			 * bootfs property value has to be a dataset name and
