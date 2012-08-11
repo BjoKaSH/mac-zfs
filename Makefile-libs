@@ -1,0 +1,185 @@
+# -*- mode: makefile -*-
+#
+# gmake based Makefiles for maczfs.
+#
+# This file describes a set of related build targets.  It does not do
+# the actual build, but merely describes what to build and which
+# ingredients go into that specific build.
+#
+# The format is straight-forward:
+#
+# 1) first specify the targets.  
+# 2) for each target, specify sources files, install files and used libraries.
+# 3) at the very end, include Makefile.Rules.
+#
+
+
+# 1) what to build
+#
+# specify executables, libraries and kernel extensions.  Do *not* use
+# extensions like ".exe" or ".a" etc.!
+#
+# here go all normal executable files:
+ALL_EXE := 
+
+#
+# here go all libraries build in this folder.  Do not specify
+# libraries used here but build elsewhere!
+ALL_LIBS := libavl libdevid libgen libnsl libnvpair libuutil libzfs libzpool 
+
+#
+# all kernel extensions
+ALL_KEXT :=
+
+
+# 2) what makes up a target.
+#
+# specify the sources *including* path, starting form project root,
+# i.e. starting with usr/src/...
+# 
+# NOTE: It is currently NOT supported to have two source files of the
+# same name but in different directories within one target!
+# 
+# Targets are specified using a set of variables, all prefixed with the
+# target's name and an underscore.  The available variables are:
+#
+# tget_SOURCES  : all source files
+# tget_ARCH     : the architectures to build.  Defaults to all available.
+# tget_LIBS     : used libraries for this project.  specify just the
+#    library name i.e. libzfs, without an extension.  Linkage will be
+#    dynamic if supported, static otherwise.  To force either one, add
+#    the library (w/o extension) to tget_LIBS_DY or tget_LIBS_AR.
+# tget_LDLIBS   : additional system libraries to link in.  Specify as
+#    for the dynamic linker, i.e. use "-lc" to link in libc.  Only
+#    evaluated when creating a dynamic library.
+# tget_INC      : additional include directories to use.
+# tget_INCSYS   : additional system include directories to be added
+#    with "-isystem".
+# tget_INSTHDRS : list of header files that should be installed along a
+#    library.
+# tget_INSTHDRSDIR : directory where to install the headers.  This is
+#    interpreted relative to the install base defined in
+#    Makefile-host.  Defaults to an architecture specific path.
+# tget_CFLAGS   : extra flags to pass to the compiler
+# tget_CXXFLAGS : same for C++ code
+# tget_LDFLAGS  : extra flags to pass to the (dynamic) linker
+# tget_DYLIB    : what type of library to build.  Empty or NO for static
+#    library and YES for a dynamic library.  Only allowed in a library
+#    target specification.
+# tget_VERS     : version information for a dynamic library.  Should be
+#    a single integer.  Mandatory for dynamic libraries.
+# tget_INSTARLIB : wether or not to install a static library.  YES to
+#    install (in tget_INSTLIBDIR), empty or NO otherwise.  Automatically
+#    set to YES if tget_DYLIB is YES but dynamic libraries are not
+#    supported by the current architecture.
+# tget_INSTLIBDIR : directory where to install dynamic libraries.  This
+#    is interpreted relative to the install base defined in Makefile-host.
+#    Defaults to an architecture dependent path.
+# tget_INSTEXEDIR : directory where to install executable files.  This
+#    is interpreted relative to the install base defined in Makefile-host.
+#    Defaults to an architecture dependent path.
+#
+# LIBS, CFLAGS, LDFLAGS, INC and SOURCES can be prefixed with an
+# architecture to apply same flags, libraries or sources only for the
+# given architecture, e.g. tget_ppc_CFLAGS := xxx
+#
+# You can invent other variables to simplify filling in above
+# variables.  Any such invented variables should use lower case, since
+# upper case names are reserved for the build systems internal use.
+# See README_buildsystem.txt file for a list of variables used.
+
+
+src := usr/src
+common_incsys := $(addprefix $(src)/,uts/common head uts/common/sys)
+
+libavl_SOURCES := $(src)/common/avl/avl.c
+libavl_INCSYS := $(common_incsys)
+libavl_INSTHDR := $(src)/uts/common/sys/avl.h
+
+
+libdevid_SOURCES := $(addprefix $(src)/lib/libdevid/,deviceid.c devid.c)
+libdevid_INCSYS := $(common_incsys)
+libdevid_INSTHDRS := $(src)/lib/libdevid/libdevid.h
+
+
+libgen_SOURCES := $(addprefix $(src)/libgen/common/,mkdirp.c)
+libgen_INCSYS :=  $(src)/uts/common
+libgen_INSTHDRS := 
+
+
+libnsl_SOURCES := $(addprefix $(src)/lib/libnsl/rpc/,xdr.c xdr_array.c xdr_mem.c)
+libnsl_INC := $(src)/lib/libnsl/rpc $(src)/lib/libnsl/include 
+libnsl_INCSYS := $(src)/uts/common
+libnsl_INSTHDRS := 
+
+
+libnvpair_SOURCES := $(addprefix $(src)/lib/libnvpair/,libnvpair.c nvpair_alloc_system.c)  $(addprefix $(src)/common/nvpair/,nvpair_alloc_fixed.c nvpair.c)
+libnvpair_LIBS := libnsl
+libnvpair_INCSYS := $(src)/uts/common
+libnvpair_INSTHDRS := $(src)/lib/libnvpair/libnvpair.h
+libnvpair_DYLIB := YES
+libnvpair_VERS := 1
+
+
+libuutil_SOURCES := $(addprefix $(src)/lib/libuutil/common/,uu_alloc.c uu_avl.c uu_dprintf.c uu_ident.c uu_list.c uu_misc.c uu_open.c uu_pname.c uu_strtoint.c)  $(src)/common/avl/avl.c
+libuutil_LIBS := libnsl
+libuutil_INC := $(src)/lib/libuutil/common $(src)/common/avl
+libuutil_INCSYS := $(common_incsys)
+libuutil_INSTHDRS := $(addprefix $(src)/lib/libuutil/common,libuutil.h libuutil_impl.h)
+libuutil_DYLIB := YES
+libuutil_VERS := 1
+
+
+libzfs_SOURCES := $(addprefix $(src)/lib/libzfs/common/,libzfs_dataset.c libzfs_util.c libzfs_graph.c libzfs_mount.c libzfs_pool.c libzfs_changelist.c libzfs_config.c libzfs_import.c libzfs_status.c)  $(addprefix $(src)/lib/libzfs/, zfs_namecheck.c zfs_prop.c zfs_deleg.c)
+libzfs_LIBS := libdevid libnvpair libuutil libgen
+libzfs_INC := $(src)/lib/libzfs/common
+libzfs_INCSYS := $(addprefix $(src)/,uts/common uts/common/fs/zfs common/zfs head)
+libzfs_INSTHDRS := $(src)/lib/libzfs/common/libzfs.h
+libzfs_DYLIB := YES
+libzfs_VERS := 1
+
+
+libzpool-kernel-src := kernel.c taskq.c util.c
+libzpool-kernel-dir := $(src)/lib/libzpool/common
+libzpool-list-src := list.c
+libzpool-list-dir := $(src)/uts/common/os
+libzpool-macosx-kext-src := zfs_context.c
+libzpool-macosx-kext-dir := $(src)/maczfs/kernel
+libzpool-macosx-src := zfs_context_libzpool.c
+libzpool-macosx-dir := $(src)/maczfs
+libzpool-fs-zfs-src := arc.o bplist.o dbuf.o \
+	dmu.o dmu_send.o dmu_object.o dmu_objset.o dmu_traverse.o \
+	dmu_tx.o		\
+	dnode.o dnode_sync.o	\
+	dsl_dir.o dsl_dataset.o dsl_pool.o dsl_synctask.o \
+	dmu_zfetch.o		\
+	dsl_deleg.o dsl_prop.o 	\
+	fletcher.o gzip.o lzjb.o \
+	metaslab.o refcount.o rprwlock.o sha256.o \
+	spa.o spa_config.o spa_errlog.o spa_history.o spa_misc.o \
+	space_map.o		\
+	txg.o uberblock.o unique.o \
+	vdev.o vdev_cache.o vdev_file.o vdev_label.o vdev_mirror.o \
+	vdev_missing.o vdev_queue.o vdev_raidz.o vdev_root.o \
+	zap.o zap_leaf.o zap_micro.o \
+	zfs_byteswap.o zfs_fm.o zfs_znode.o zil.o \
+	zio.o zio_checksum.o zio_compress.o zio_inject.o
+libzpool-fs-zfs-dir := $(src)/uts/common/fs/zfs
+libzpool-zfs-src := zfs_namecheck.o zfs_prop.o zfs_deleg.o
+libzpool-zfs-dir := $(src)/common/zfs
+
+libzpool-common-src  := $(addprefix $(libzpool-kernel-dir),$(libzpool-kernel-src))  $(addprefix $(libzpool-list-dir),$(libzpool-list-src))  $(addprefix $(libzpool-fs-zfs-dir),$(libzpool-fs-zfs-src))  $(addprefix $(libzpool-zfs-dir),$(libzpool-zfs-src))
+
+libzpool-kext_SOURCES := $(libzpool-common-src)  $(addprefix $(libzpool-macosx-kext-dir),$(libzpool-macosx-kext-src))
+libzpool-kext_INCSYS := $(common_incsys)
+libzpool-kext_INSTHDRS := $(src)
+
+libzpool_SOURCES := $(libzpool-common-src)  $(addprefix $(libzpool-macosx-dir),$(libzpool-macosx-src))
+libzpool_INCSYS := $(common_incsys)
+libzpool_INSTHDRS := $(src)
+
+
+# 3) include Makefile.Rules
+#
+# This has all the magic that does the actual multi-architecture builds.
+include ./Makefile.Rules
