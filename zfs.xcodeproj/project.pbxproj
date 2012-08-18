@@ -2762,7 +2762,7 @@
 				INSTALL_GROUP = wheel;
 				INSTALL_OWNER = root;
 				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions";
-				MODULE_NAME = com.bandlem.mac.zfs.fs;
+				MODULE_NAME = org.maczfs.bjokash-experimental.zfs.fs;
 				MODULE_START = zfs_module_start;
 				MODULE_STOP = zfs_module_stop;
 				MODULE_VERSION = 0.0.0;
@@ -2796,7 +2796,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = zfs_kext/Info.plist;
 				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions";
-				MODULE_NAME = com.bandlem.mac.zfs.fs;
+				MODULE_NAME = org.maczfs.bjokash-experimental.zfs.fs;
 				MODULE_START = zfs_module_start;
 				MODULE_STOP = zfs_module_stop;
 				MODULE_VERSION = 0.0.0;
@@ -3986,7 +3986,7 @@
 				INSTALL_GROUP = wheel;
 				INSTALL_OWNER = root;
 				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions";
-				MODULE_NAME = com.bandlem.mac.zfs.fs;
+				MODULE_NAME = org.maczfs.bjokash-experimental.zfs.fs;
 				MODULE_START = zfs_module_start;
 				MODULE_STOP = zfs_module_stop;
 				MODULE_VERSION = 0.0.0;

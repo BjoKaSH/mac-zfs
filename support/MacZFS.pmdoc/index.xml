@@ -2,7 +2,7 @@
   <properties>
     <title>Mac ZFS</title>
     <build>MacZFS.pkg</build>
-    <organization>com.bandlem.mac.zfs</organization>
+    <organization>org.maczfs.bjokash-experimental.zfs</organization>
     <userSees ui="both" />
     <min-target os="3" />
     <domain anywhere="true" />
@@ -17,7 +17,7 @@
     description="ZFS for Leopard on Intel 32 bit and PPC machines"
     starts_selected="true" starts_enabled="true"
     starts_hidden="false">
-      <pkgref id="com.bandlem.mac.zfs.105.pkg" />
+      <pkgref id="org.maczfs.bjokash-experimental.zfs.105.pkg" />
       <choice-reqs>
         <requirement id="tosv" operator="ge" value="'10.5'"
         selected="no" enabled="no" hidden="yes"
@@ -34,7 +34,7 @@
     description="ZFS for Snow Leopard on Intel 32 bit and 64 bit machines"
     starts_selected="true" starts_enabled="true"
     starts_hidden="false">
-      <pkgref id="com.bandlem.mac.zfs.106.pkg" />
+      <pkgref id="org.maczfs.bjokash-experimental.zfs.106.pkg" />
       <choice-reqs>
         <requirement id="tosv" operator="ge" value="'10.6'"
         selected="no" enabled="no" hidden="yes"
