@@ -3527,6 +3527,17 @@ main(int argc, char **argv)
 	argc -= optind;
 	argv += optind;
 
+#ifdef __APPLE__
+	/*
+	 * Check zopt_dir, as ztest_init() will fail if path is not absolute
+	 */
+	
+	if (zopt_dir[0] != '/') {
+		fprintf(stderr, "%s: -f : path must start with '/'.\n", getexecname_fake);
+		exit(1);
+	}
+#endif
+
 	dprintf_setup(&argc, argv);
 
 	/*
