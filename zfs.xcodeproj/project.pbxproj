@@ -83,7 +83,6 @@
 		205A1F561365E0C500C2B265 /* util.c in CopyFiles */ = {isa = PBXBuildFile; fileRef = 205A1F0E1365E0C500C2B265 /* util.c */; };
 		205A1F591365E14100C2B265 /* kernel.c in Sources */ = {isa = PBXBuildFile; fileRef = 205A1F081365E0C500C2B265 /* kernel.c */; };
 		205A1F5A1365E25E00C2B265 /* uberblock.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375FC10A38E6300754C9E /* uberblock.c */; };
-		205A1F5C1365E25E00C2B265 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93766A10A38E6300754C9E /* util.c */; };
 		205A1F5D1365E25E00C2B265 /* vdev.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375EF10A38E6300754C9E /* vdev.c */; };
 		205A1F5E1365E25E00C2B265 /* vdev_cache.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E110A38E6300754C9E /* vdev_cache.c */; };
 		205A1F601365E25E00C2B265 /* vdev_file.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E910A38E6300754C9E /* vdev_file.c */; };
@@ -119,6 +118,7 @@
 		2064E55715D81A980054C259 /* libzfs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2696406C0AACEAD20073456B /* libzfs.dylib */; };
 		2064E56415D81ADC0054C259 /* zdb_il.c in Sources */ = {isa = PBXBuildFile; fileRef = 2064E56215D81ADC0054C259 /* zdb_il.c */; };
 		2064E56515D81ADC0054C259 /* zdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 2064E56315D81ADC0054C259 /* zdb.c */; };
+		20FDD07515E05184006BFF32 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 205A1F0E1365E0C500C2B265 /* util.c */; };
 		2611F7400ACDD29E00E5D4E2 /* zfsutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 2611F73F0ACDD29E00E5D4E2 /* zfsutil.c */; };
 		2611F7F60ACDE5F200E5D4E2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2611F7F50ACDE5F200E5D4E2 /* InfoPlist.strings */; };
 		2611F8040ACDE72900E5D4E2 /* zfs.util in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2611F7360ACDD13900E5D4E2 /* zfs.util */; };
@@ -325,35 +325,35 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 205A1E931365DE5E00C2B265 /* libzpool */;
+			remoteGlobalIDString = 205A1E931365DE5E00C2B265;
 			remoteInfo = libzpool;
 		};
 		206788D515D8623500F952DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 205A1E861365DDD600C2B265 /* libnvpair */;
+			remoteGlobalIDString = 205A1E861365DDD600C2B265;
 			remoteInfo = libnvpair;
 		};
 		206788D715D8623500F952DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 205A1E7A1365DD4000C2B265 /* libnsl */;
+			remoteGlobalIDString = 205A1E7A1365DD4000C2B265;
 			remoteInfo = libnsl;
 		};
 		206788D915D8623F00F952DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 2064E54815D81A770054C259 /* zdb */;
+			remoteGlobalIDString = 2064E54815D81A770054C259;
 			remoteInfo = zdb;
 		};
 		206788DB15D8624500F952DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FA93776E10A3924300754C9E /* ztest */;
+			remoteGlobalIDString = FA93776E10A3924300754C9E;
 			remoteInfo = ztest;
 		};
 		2611F76A0ACDD5C900E5D4E2 /* PBXContainerItemProxy */ = {
@@ -2087,13 +2087,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20FDD07515E05184006BFF32 /* util.c in Sources */,
 				2064E52415D818620054C259 /* assfail.c in Sources */,
 				205A1F7E1365EA8700C2B265 /* zfs_context_libzpool.c in Sources */,
 				205A1F771365E92800C2B265 /* vdev_missing.c in Sources */,
 				205A1F761365E8BE00C2B265 /* unique.c in Sources */,
 				205A1F751365E59100C2B265 /* taskq.c in Sources */,
 				205A1F5A1365E25E00C2B265 /* uberblock.c in Sources */,
-				205A1F5C1365E25E00C2B265 /* util.c in Sources */,
 				205A1F5D1365E25E00C2B265 /* vdev.c in Sources */,
 				205A1F5E1365E25E00C2B265 /* vdev_cache.c in Sources */,
 				205A1F601365E25E00C2B265 /* vdev_file.c in Sources */,
