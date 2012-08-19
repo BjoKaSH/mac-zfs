@@ -779,8 +779,12 @@ zfs_validate_properties(libzfs_handle_t *hdl, zfs_type_t type, char *pool_name,
 			goto error;
 		}
 
+		/*
+		 * zhp is NULL on property set
+		 * zhp is != NULL on pool create or dataset clone 
+		 */
 		if (zfs_prop_readonly(prop) &&
-		    (!zfs_prop_setonce(prop) || zhp != NULL)) {
+		    (!zfs_prop_setonce(prop) || zhp == NULL)) {
 			zfs_error_aux(hdl,
 			    dgettext(TEXT_DOMAIN, "'%s' is readonly"),
 			    propname);
@@ -1038,7 +1042,7 @@ zfs_validate_properties(libzfs_handle_t *hdl, zfs_type_t type, char *pool_name,
 #endif /* !__APPLE__ */
 
 		case ZPOOL_PROP_ASHIFT:
-			if (zhp != NULL) {
+			if (zhp == NULL) {
 				zfs_error_aux(hdl, dgettext(TEXT_DOMAIN,
 				    "property '%s' can only be set at "
 				    "creation time"), propname);
