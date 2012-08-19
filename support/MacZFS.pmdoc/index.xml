@@ -3,47 +3,28 @@
     <title>Mac ZFS</title>
     <build>MacZFS.pkg</build>
     <organization>com.bandlem.mac.zfs</organization>
-    <userSees ui="both" />
-    <min-target os="3" />
-    <domain anywhere="true" />
+    <userSees ui="both"/>
+    <min-target os="3"/>
+    <domain anywhere="true"/>
   </properties>
   <distribution>
-    <versions min-spec="1.000000" />
-    <scripts></scripts>
+    <versions min-spec="1.000000"/>
+    <scripts>
+    </scripts>
   </distribution>
   <contents>
-    <choice title="ZFS for Leopard" id="zfs105"
-    tooltip="ZFS for Leopard"
-    description="ZFS for Leopard on Intel 32 bit and PPC machines"
-    starts_selected="true" starts_enabled="true"
-    starts_hidden="false">
-      <pkgref id="com.bandlem.mac.zfs.105.pkg" />
+    <choice title="ZFS for Leopard" id="zfs105" tooltip="ZFS for Leopard" description="ZFS for Leopard on Intel 32 bit and PPC machines" starts_selected="true" starts_enabled="true" starts_hidden="false">
+      <pkgref id="com.bandlem.mac.zfs.105.pkg"/>
       <choice-reqs>
-        <requirement id="tosv" operator="ge" value="'10.5'"
-        selected="no" enabled="no" hidden="yes"
-        startSelected="unchanged" startEnabled="unchanged"
-        startHidden="unchanged" />
-        <requirement id="tosv" operator="lt" value="'10.6'"
-        selected="no" enabled="no" hidden="yes"
-        startSelected="unchanged" startEnabled="unchanged"
-        startHidden="unchanged" />
+	<requirement id="tosv" operator="ge" value="'10.5'" selected="no" enabled="no" hidden="yes" startSelected="unchanged" startEnabled="unchanged" startHidden="unchanged"/>
+	<requirement id="tosv" operator="lt" value="'10.6'" selected="no" enabled="no" hidden="yes" startSelected="unchanged" startEnabled="unchanged" startHidden="unchanged"/>
       </choice-reqs>
     </choice>
-    <choice title="ZFS for Snow Leopard and Lion" id="zfs106"
-    tooltip="ZFS for Snow Leopard and Lion"
-    description="ZFS for Snow Leopard and Lion on Intel 32 bit and 64 bit machines"
-    starts_selected="true" starts_enabled="true"
-    starts_hidden="false">
-      <pkgref id="com.bandlem.mac.zfs.106.pkg" />
+    <choice title="ZFS for Snow Leopard and Lion" id="zfs106" tooltip="ZFS for Snow Leopard and Lion" description="ZFS for Snow Leopard and Lion on Intel 32 bit and 64 bit machines" starts_selected="true" starts_enabled="true" starts_hidden="false">
+      <pkgref id="com.bandlem.mac.zfs.106.pkg"/>
       <choice-reqs>
-        <requirement id="tosv" operator="ge" value="'10.6'"
-        selected="no" enabled="no" hidden="yes"
-        startSelected="unchanged" startEnabled="unchanged"
-        startHidden="unchanged" />
-        <requirement id="tosv" operator="lt" value="'10.8'"
-        selected="no" enabled="no" hidden="yes"
-        startSelected="unchanged" startEnabled="unchanged"
-        startHidden="unchanged" />
+	<requirement id="tosv" operator="ge" value="'10.6'" selected="no" enabled="no" hidden="yes" startSelected="unchanged" startEnabled="unchanged" startHidden="unchanged"/>
+	<requirement id="tosv" operator="lt" value="'10.8'" selected="no" enabled="no" hidden="yes" startSelected="unchanged" startEnabled="unchanged" startHidden="unchanged"/>
       </choice-reqs>
     </choice>
   </contents>
@@ -52,15 +33,15 @@
       <resource relative="true" mod="true" type="background">../support/background.pdf</resource>
       <resource relative="true" mod="true" type="license">../LICENSE.txt</resource>
       <resource relative="true" mod="true" type="readme">../README.txt</resource>
-      <resource mime-type="text/rtf" kind="embedded"
-      type="welcome">
-        <![CDATA[{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
-{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+      <resource mime-type="text/rtf" kind="embedded" type="welcome">
+	<![CDATA[{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf320
+		 {\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 LucidaGrande;}
+		 {\colortbl;\red255\green255\blue255;}
+		 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs26 \cf0 This will install the next-generation ZFS support for Mac OSX systems running either Leopard or Snow Leopard. Preview support for Lion is available.}]]>
-</resource>
+\f0\fs24 \cf0 		 		 		 
+\f1\fs26 This will install the next-generation ZFS support for Mac OSX systems running either Leopard or Snow Leopard. Preview support for Lion is available.}]]>
+      </resource>
     </locale>
   </resources>
   <requirements>
@@ -71,7 +52,7 @@
       <message>Mac ZFS is only certified to run on Leopard and Snow Leopard at this time, though preview support for Lion is available.</message>
     </requirement>
   </requirements>
-  <flags />
+  <flags/>
   <item type="file">01zfs.xml</item>
   <item type="file">02zfs.xml</item>
   <mod>properties.title</mod>

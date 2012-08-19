@@ -2,29 +2,33 @@
   <config>
     <identifier>com.bandlem.mac.zfs.106.pkg</identifier>
     <version>0.0.0</version>
-    <description />
-    <post-install type="none" />
-    <requireAuthorization />
+    <description>
+    </description>
+    <post-install type="none"/>
+    <requireAuthorization/>
     <installFrom relative="true">ZFS106</installFrom>
     <installTo>/</installTo>
     <flags>
-      <followSymbolicLinks />
+      <followSymbolicLinks/>
     </flags>
-    <packageStore type="internal" />
-    <mod>installFrom.isRelativeType</mod>
+    <packageStore type="internal">
+    </packageStore>
     <mod>installTo</mod>
+    <mod>scripts.scriptsDirectoryPath.path</mod>
     <mod>identifier</mod>
     <mod>parent</mod>
     <mod>version</mod>
+    <mod>scripts.postinstall.isRelativeType</mod>
+    <mod>installFrom.isRelativeType</mod>
   </config>
+  <scripts>
+    <postinstall relative="true" mod="true">post-install.sh</postinstall>
+    <scripts-dir relative="true" mod="true">Resources</scripts-dir>
+  </scripts>
   <contents>
     <file-list>02zfs-contents.xml</file-list>
-    <component id="com.bandlem.mac.zfs.util"
-    path="ZFS106/System/Library/Filesystems/zfs.fs"
-    version="0.0.0" />
-    <component id="com.bandlem.mac.zfs.fs"
-    path="ZFS106/System/Library/Extensions/zfs.kext"
-    version="0.0.0" />
+    <component id="com.bandlem.mac.zfs.fs" path="ZFS106/System/Library/Extensions/zfs.kext" version="0.0.0"/>
+    <component id="com.bandlem.mac.zfs.util" path="ZFS106/System/Library/Filesystems/zfs.fs" version="0.0.0"/>
     <filter>/CVS$</filter>
     <filter>/\.svn$</filter>
     <filter>/\.cvsignore$</filter>
