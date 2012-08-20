@@ -826,6 +826,12 @@ zpool_do_create(int argc, char **argv)
 	} else {
 		ret = 1;
 		/*
+		 * Add other properties not describing the vdev topology
+		 */
+		if (props)
+			nvlist_add_nvlist(nvroot, ZPOOL_CONFIG_PROPS, props);
+
+		/*
 		 * Hand off to libzfs.
 		 */
 		if (zpool_create(g_zfs, poolname, nvroot, altroot) == 0) {
