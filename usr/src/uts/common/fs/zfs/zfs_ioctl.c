@@ -1535,7 +1535,7 @@ zfs_ioc_pool_set_props(zfs_cmd_t *zc)
 			objnum = dmu_objset_id(os);
 			dmu_objset_close(os);
 			break;
-			
+
 		case ZPOOL_PROP_ASHIFT:
 			/* 
 			 * Property can only be set at pool create time, and

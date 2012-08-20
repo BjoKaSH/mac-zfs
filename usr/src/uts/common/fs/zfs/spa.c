@@ -1272,11 +1272,11 @@ spa_create(const char *pool, nvlist_t *nvroot, const char *altroot,
 		(void) spa_history_log(spa, history_str, LOG_CMD_POOL_CREATE);
 
 	mutex_exit(&spa_namespace_lock);
-	
+
 	/*
 	 * Process additional properties not set diectly in above call.
 	 */
-	
+
 	if (nvlist_lookup_nvlist(nvroot, ZPOOL_CONFIG_PROPS, &props) == 0) {
 		/*
 		 * Remove properties already set above
@@ -1287,7 +1287,7 @@ spa_create(const char *pool, nvlist_t *nvroot, const char *altroot,
 		/* apply porperties. */
 		spa_set_props(spa, props);
 	}
-	
+
 	return (0);
 }
 

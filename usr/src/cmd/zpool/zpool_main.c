@@ -196,8 +196,8 @@ get_usage(zpool_help_t idx) {
 	case HELP_CLEAR:
 		return (gettext("\tclear <pool> [device]\n"));
 	case HELP_CREATE:
-		return (gettext("\tcreate  [-fn] [-R root] [-m mountpoint] "
-		    "<pool> <vdev> ...\n"));
+		return (gettext("\tcreate [-fn] [-o property=value] ... \n"
+		    "\t    [-m mountpoint] [-R root] <pool> <vdev> ...\n"));
 	case HELP_DESTROY:
 		return (gettext("\tdestroy [-f] <pool>\n"));
 	case HELP_DETACH:
@@ -635,7 +635,7 @@ zpool_do_remove(int argc, char **argv)
 }
 
 /*
- * zpool create [-fn] [-R root] [-m mountpoint] <pool> <dev> ...
+ * zpool create [-fn] [-o property=value] ... [-R root] [-m mountpoint] <pool> <dev> ...
  *
  *	-f	Force creation, even if devices appear in use
  *	-n	Do not create the pool, but display the resulting layout if it
@@ -643,6 +643,7 @@ zpool_do_remove(int argc, char **argv)
  *      -R	Create a pool under an alternate root
  *      -m	Set default mountpoint for the root dataset.  By default it's
  *      	'/<pool>'
+ *      -o	Set property=value.
  *
  * Creates the named pool according to the given vdev specification.  The
  * bulk of the vdev processing is done in get_vdev_spec() in zpool_vdev.c.  Once
