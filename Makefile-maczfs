@@ -13,6 +13,10 @@
 # 3) at the very end, include Makefile.Rules.
 #
 
+# fix library problems with macports & Co.
+CPATH :=
+export CPATH
+
 
 # 1) what to build
 #
@@ -110,7 +114,7 @@ libzfs_SOURCES := $(addprefix $(src)/common/,avl/avl.c devid/devid.c nvpair/nvpa
 libzfs_SOURCES += $(addprefix $(src)/lib/,libdevid/deviceid.c libnsl/rpc/xdr.c libnsl/rpc/xdr_array.c libnsl/rpc/xdr_mem.c libnvpair/libnvpair.c libnvpair/nvpair_alloc_system.c)
 libzfs_SOURCES += $(addprefix $(src)/lib/libuutil/common/,uu_alloc.c uu_avl.c uu_dprintf.c uu_ident.c uu_list.c uu_misc.c uu_open.c uu_pname.c uu_strtoint.c)
 libzfs_SOURCES += $(addprefix $(src)/lib/libzfs/common/,libzfs_changelist.c libzfs_config.c libzfs_dataset.c libzfs_graph.c libzfs_import.c libzfs_mount.c libzfs_pool.c libzfs_status.c libzfs_util.c)
-libzfs_SOURCES += $(src)/libgen/common/mkdirp.c maczfs/assfail.c
+libzfs_SOURCES += $(src)/libgen/common/mkdirp.c $(src)/maczfs/assfail.c
 
 libzfs_DYLIB := YES
 libzfs_INSTARLIB := YES
@@ -122,47 +126,47 @@ libzfs_INCSYS := $(addprefix $(src)/,maczfs libgen/common lib/libzfs/common lib/
 libzfs_INSTHDRS := $(addprefix $(src)/common/,devid/devid_impl.h util/qsort.h zfs/zfs_deleg.h zfs/zfs_namecheck.h zfs/zfs_prop.h)
 libzfs_INSTHDRS += $(addprefix $(src)/lib/,libdevid/libdevid.h libnsl/include/mt.h libnsl/rpc/rpc_mt.h libnvpair/libnvpair.h libuutil/common/libuutil.h libuutil/common/libuutil_common.h libuutil/common/libuutil_impl.h libzfs/common/libzfs.h libzfs/common/libzfs_impl.h libzfs/common/libzfs_ioctl.h)
 libzfs_INSTHDRS += $(addprefix $(src)/uts/common/,fs/zfs/sys/zvol.h rpc/types.h rpc/xdr.h sys/fs/zfs.h sys/mntent.h sys/mnttab.h)
-libzfs_INSTHDRS += maczfs/assfail.h $(src)/head/libintl.h
+libzfs_INSTHDRS += $(src)/maczfs/assfail.h $(src)/head/libintl.h
 
 libzfs_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
 
 
-zfs_SOURCES := $(addprefix $(src)/,cmd/zfs/zfs_iter.c cmd/zfs/zfs_main.c) maczfs/assfail.c
+zfs_SOURCES := $(addprefix $(src)/,cmd/zfs/zfs_iter.c cmd/zfs/zfs_main.c) $(src)/maczfs/assfail.c
 zfs_LIBS := libzfs
 zfs_LDLIBS := -lc
 zfs_CFLAGS := -include usr/src/uts/common/fs/zfs/sys/zfs_context.h -include usr/src/uts/common/sys/types.h
-zfs_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zfs maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair) $(src) maczfs
+zfs_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zfs maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair) $(src)
 
 zfs_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
 
 
-zpool_SOURCES := $(addprefix $(src)/,cmd/zpool/zpool_iter.c cmd/zpool/zpool_main.c cmd/zpool/zpool_util.c cmd/zpool/zpool_vdev.c) maczfs/assfail.c
+zpool_SOURCES := $(addprefix $(src)/,cmd/zpool/zpool_iter.c cmd/zpool/zpool_main.c cmd/zpool/zpool_util.c cmd/zpool/zpool_vdev.c maczfs/assfail.c)
 zpool_LIBS := libzfs
 zpool_LDLIBS := -lc
 zpool_CFLAGS := -include usr/src/uts/common/fs/zfs/sys/zfs_context.h -include usr/src/uts/common/sys/types.h
-zpool_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src) maczfs
+zpool_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src)
 
 zpool_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
 
-zfsutil_SOURCES := zfs_bundle/zfsutil.c maczfs/assfail.c
+zfsutil_SOURCES := zfs_bundle/zfsutil.c $(src)/maczfs/assfail.c
 zfsutil_INSTNAME := zfs.util
 zfsutil_LIBS := libzfs
 zfsutil_LDLIBS := -lc
 zfsutil_CFLAGS := -include usr/src/uts/common/fs/zfs/sys/zfs_context.h -include usr/src/uts/common/sys/types.h
-zfsutil_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src) maczfs
+zfsutil_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src)
 
 zfsutil_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
 
-zoink_SOURCES := zfs_commands/zoink/zoink.c maczfs/assfail.c
+zoink_SOURCES := zfs_commands/zoink/zoink.c $(src)/maczfs/assfail.c
 zoink_LIBS := libzfs
 zoink_LDLIBS := -lc -lcurses
 zoink_CFLAGS := -include usr/src/uts/common/fs/zfs/sys/zfs_context.h -include usr/src/uts/common/sys/types.h
-zoink_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src) maczfs
+zoink_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src)
 
 zfsutil_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
 
 zfskext_SOURCES := $(addprefix $(src)/common/,avl/avl.c nvpair/nvpair.c util/qsort.c zfs/zfs_deleg.c zfs/zfs_namecheck.c zfs/zfs_prop.c)
-#zfskext_SOURCES += $(addprefix $(src)/maczfs/, kernel/maczfs_kernel.c kernel/zfs_context.c)
+zfskext_SOURCES += $(addprefix $(src)/maczfs/, kernel/maczfs_kernel.c kernel/zfs_context.c)
 zfskext_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,arc.c bplist.c dbuf.c dmu.c dmu_object.c dmu_objset.c dmu_send.c dmu_traverse.c dmu_tx.c dmu_zfetch.c)
 zfskext_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,dnode.c dnode_sync.c dsl_dataset.c dsl_deleg.c dsl_dir.c dsl_pool.c dsl_prop.c dsl_synctask.c fletcher.c gzip.c lzjb.c metaslab.c refcount.c)
 zfskext_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,rprwlock.c sha256.c spa.c spa_config.c spa_errlog.c spa_history.c spa_misc.c space_map.c txg.c uberblock.c unique.c vdev.c vdev_cache.c)
@@ -170,8 +174,7 @@ zfskext_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,vdev_disk.c vdev_file.c
 zfskext_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_acl.c zfs_byteswap.c zfs_ctldir.c zfs_dir.c zfs_fm.c zfs_ioctl.c zfs_log.c zfs_replay.c zfs_rlock.c zfs_vfsops.c zfs_vnops.c)
 zfskext_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_vnops_macosx.c zfs_znode.c zil.c zio.c zio_checksum.c zio_compress.c zio_inject.c zvol.c)
 zfskext_SOURCES += $(addprefix $(src)/uts/common/os/,callb.c kmem.c list.c nvpair_alloc_system.c taskq.c)
-zfskext_SOURCES += $(addprefix $(src)/uts/common/rpc/,xdr.c xdr_array.c xdr_mem.c) maczfs/assfail.c
-#$(src)/uts/common/zmod/zmod.c
+zfskext_SOURCES += $(addprefix $(src)/uts/common/rpc/,xdr.c xdr_array.c xdr_mem.c) $(src)/maczfs/assfail.c $(src)/uts/common/zmod/zmod.c
 
 zfskext_CFLAGS := -mkernel -DNAMEDSTREAMS -D__APPLE_API_UNSTABLE -D_KERNEL -DKERNEL -DKERNEL_PRIVATE -DDRIVER_PRIVATE
 zfskext_CFLAGS += -nostdinc -finline -fno-keep-inline-functions -Wmissing-prototypes -Wunused-function -Wunused-label -w -Wshadow -Wnewline-eof -Wno-deprecated-declarations
@@ -212,7 +215,6 @@ libnsl_INSTARLIB := YES
 libnsl_INC := $(src)/lib/libnsl/rpc $(src)/lib/libnsl/include 
 libnsl_CFLAGS := -include usr/src/uts/common/fs/zfs/sys/zfs_context.h -include usr/src/uts/common/sys/types.h -DTEXT_DOMAIN=0
 libnsl_INCSYS := $(src)/uts/common
-# -isystem $(SRCROOT)/usr/src/head -isystem $(SRCROOT)/usr/src/lib -isystem $(SRCROOT)/usr/src/lib/libzfs -isystem $(SRCROOT)/usr/src/lib/libuutil -isystem $(SRCROOT)/usr/src/lib/libuutil/common -isystem $(SRCROOT)/usr/src/lib/libnvpair -isystem $(SRCROOT)/usr/src/lib/libzfs/common -isystem $(SRCROOT)/usr/src/libgen/common -isystem $(SRCROOT)/usr/src/common -isystem $(SRCROOT)/usr/src/common/zfs -isystem $(SRCROOT)/usr/src/uts/common -isystem $(SRCROOT)/usr/src/uts/common/fs -isystem $(SRCROOT)/usr/src/uts/common/fs/zfs/ -isystem $(SRCROOT)/usr/src/uts/common/sys -v
 
 
 libnvpair_SOURCES := $(addprefix $(src)/lib/libnvpair/,libnvpair.c nvpair_alloc_system.c)  $(addprefix $(src)/common/nvpair/,nvpair_alloc_fixed.c nvpair.c)
@@ -220,36 +222,27 @@ libnvpair_INSTHDRS := $(src)/lib/libnvpair/libnvpair.h
 libnvpair_DYLIB := NO
 libnvpair_VERS := 1
 libnvpair_INSTARLIB := YES
-#libnvpair_LIBS := libnsl
 libnvpair_CFLAGS := -include usr/src/uts/common/fs/zfs/sys/zfs_context.h -include usr/src/uts/common/sys/types.h -DTEXT_DOMAIN=0
 libnvpair_INCSYS := $(src)/uts/common
 
 
 libzpool_SOURCES := $(addprefix $(src)/common/,avl/avl.c)
-# libzpool_SOURCES := $(addprefix $(src)/common/,nvpair/nvpair.c util/qsort.c)
 libzpool_SOURCES += $(addprefix $(src)/common/,zfs/zfs_deleg.c zfs/zfs_namecheck.c zfs/zfs_prop.c)
 libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,arc.c bplist.c dbuf.c dmu.c dmu_object.c dmu_objset.c dmu_send.c dmu_traverse.c dmu_tx.c dmu_zfetch.c)
 libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,dnode.c dnode_sync.c dsl_dataset.c dsl_deleg.c dsl_dir.c dsl_pool.c dsl_prop.c dsl_synctask.c fletcher.c gzip.c lzjb.c metaslab.c refcount.c)
 libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,rprwlock.c sha256.c spa.c spa_config.c spa_errlog.c spa_history.c spa_misc.c space_map.c txg.c uberblock.c unique.c vdev.c vdev_cache.c)
-# libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,vdev_disk.c)
 libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,vdev_file.c vdev_label.c vdev_mirror.c vdev_missing.c vdev_queue.c vdev_raidz.c vdev_root.c zap.c zap_leaf.c zap_micro.c)
 libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_byteswap.c)
-# libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_acl.c zfs_ctldir.c zfs_dir.c)
 libzpool_SOURCES += $(src)/uts/common/fs/zfs/zfs_fm.c
-# libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_ioctl.c zfs_log.c zfs_replay.c zfs_rlock.c zfs_vfsops.c zfs_vnops.c)
-# libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_vnops_macosx.c zvol.c)
 libzpool_SOURCES += $(addprefix $(src)/uts/common/fs/zfs/,zfs_znode.c zil.c zio.c zio_checksum.c zio_compress.c zio_inject.c)
-# libzpool_SOURCES += $(addprefix $(src)/uts/common/os/,callb.c kmem.c nvpair_alloc_system.c taskq.c)
 libzpool_SOURCES += $(src)/uts/common/os/list.c
-# libzpool_SOURCES += $(addprefix $(src)/uts/common/rpc/,xdr.c xdr_array.c xdr_mem.c)
-#maczfs/assfail.c
 libzpool_SOURCES += $(addprefix $(src)/lib/libzpool/common/,kernel.c taskq.c util.c)
-libzpool_SOURCES += maczfs/zfs_context_libzpool.c
+libzpool_SOURCES += $(src)/maczfs/zfs_context_libzpool.c $(src)/maczfs/assfail.c
 libzpool_DYLIB := YES
 libzpool_VERS := 1
 libzpool_INSTARLIB := YES
 libzpool_LIBS := libnsl libnvpair
-libzpool_LDLIBS := -lc
+libzpool_LDLIBS := -lc -lz
 libzpool_INC := $(addprefix $(src)/,head lib lib/libzfs lib/libuutil lib/libuutil/common lib/libnvpair)
 libzpool_INC += $(addprefix $(src)/,lib/libzfs/common lib/libzpool/common libgen/common common)
 libzpool_INC += $(addprefix $(src)/,common/zfs uts/common uts/common/fs uts/common/fs/zfs)
@@ -259,22 +252,12 @@ libzpool_CFLAGS += -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_6
 libzpool_CFLAGS += -include $(src)/lib/libzpool/common/sys/zfs_context.h -include $(src)/uts/common/sys/types.h
 libzpool_INCSYS := $(addprefix $(src)/,uts/common head uts/common/sys)
 
-# -isystem $(SRCROOT)/usr/src/head -isystem $(SRCROOT)/usr/src/lib
-# -isystem $(SRCROOT)/usr/src/lib/libzfs -isystem $(SRCROOT)/usr/src/lib/libuutil
-# -isystem $(SRCROOT)/usr/src/lib/libuutil/common -isystem $(SRCROOT)/usr/src/lib/libnvpair
-# -isystem $(SRCROOT)/usr/src/lib/libzfs/common -isystem $(SRCROOT)/usr/src/lib/libzpool/common
-# -isystem $(SRCROOT)/usr/src/libgen/common -isystem $(SRCROOT)/usr/src/common
-# -isystem $(SRCROOT)/usr/src/common/zfs -isystem $(SRCROOT)/usr/src/uts/common
-# -isystem $(SRCROOT)/usr/src/uts/common/fs -isystem $(SRCROOT)/usr/src/uts/common/fs/zfs/
-# -isystem $(SRCROOT)/usr/src/uts/common/sys -include $(SRCROOT)/usr/src/uts/common/sys/types.h
-# -include $(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h -v
-
 
 ztest_SOURCES := $(src)/cmd/ztest/ztest.c
 ztest_LIBS := libzpool
 ztest_LDLIBS := -lc
 ztest_CFLAGS := -include $(src)/uts/common/sys/types.h -include $(src)/lib/libzpool/common/sys/zfs_context.h
-ztest_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common uts/common/sys cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src) maczfs
+ztest_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common uts/common/sys cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src)
 
 ztest_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
 
@@ -283,19 +266,9 @@ zdb_SOURCES := $(addprefix $(src)/cmd/zdb/,zdb.c zdb_il.c)
 zdb_LIBS := libzfs libzpool
 zdb_LDLIBS := -lc
 zdb_CFLAGS := -include $(src)/uts/common/sys/types.h -include $(src)/lib/libzpool/common/sys/zfs_context.h
-zdb_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common uts/common/sys cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src) maczfs
+zdb_INCSYS := $(addprefix $(src)/,head uts/common/fs/zfs uts/common uts/common/sys cmd/zpool maczfs lib/libzfs/common lib/libuutil/common lib/libnvpair)  $(src)
 
 zdb_ppc_CFLAGS := -DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_5 -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk 
-
-# -isystem $(SRCROOT)/usr/src/head -isystem $(SRCROOT)/usr/src/lib
-# -isystem $(SRCROOT)/usr/src/lib/libzfs -isystem $(SRCROOT)/usr/src/lib/libuutil
-# -isystem $(SRCROOT)/usr/src/lib/libuutil/common -isystem $(SRCROOT)/usr/src/lib/libnvpair
-# -isystem $(SRCROOT)/usr/src/lib/libzfs/common -isystem $(SRCROOT)/usr/src/lib/libzpool/common
-# -isystem $(SRCROOT)/usr/src/libgen/common -isystem $(SRCROOT)/usr/src/common
-# -isystem $(SRCROOT)/usr/src/common/zfs -isystem $(SRCROOT)/usr/src/uts/common
-# -isystem $(SRCROOT)/usr/src/uts/common/fs -isystem $(SRCROOT)/usr/src/uts/common/fs/zfs/
-# -isystem $(SRCROOT)/usr/src/uts/common/sys -include $(SRCROOT)/usr/src/uts/common/sys/types.h
-# -include $(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h -v
 
 # 3) include Makefile.Rules
 #
