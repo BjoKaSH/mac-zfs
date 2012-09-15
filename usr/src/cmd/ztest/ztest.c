@@ -326,6 +326,8 @@ static void usage(boolean_t) __attribute__ ((noreturn));
 #else
 static void usage(boolean_t) __NORETURN;
 #endif
+static void ztest_dump_datasets(char *pool);
+
 
 /*
  * These libumem hooks provide a reasonable set of defaults for the allocator's
@@ -932,6 +934,8 @@ ztest_spa_create_destroy(ztest_args_t *za)
 	if (error != EBUSY)
 		fatal(0, "spa_destroy() = %d", error);
 
+	ztest_dump_datasets(za->za_pool);
+	
 	spa_close(spa, FTAG);
 	(void) rw_unlock(&ztest_shared->zs_name_lock);
 }
@@ -2967,8 +2971,30 @@ ztest_replace_one_disk(spa_t *spa, uint64_t vdev)
    full path to the executable. */
 char *getexecname_fake=0;
 
+static void ztest_run_zdb(char *pool, const char *zdb_cmd_line);
+
+static void
+ztest_dump_datasets(char *pool)
+{
+	char run_zdb_cmd_line[256];
+	(void) sprintf(run_zdb_cmd_line, "-d -U %s",
+		pool);
+	ztest_run_zdb(pool,run_zdb_cmd_line);
+}
+
 static void
 ztest_verify_blocks(char *pool)
+{
+	char run_zdb_cmd_line[256];
+	(void) sprintf(run_zdb_cmd_line, "-bc%s%s -U -O %s %s",
+	    zopt_verbose >= 3 ? "s" : "",
+	    zopt_verbose >= 4 ? "v" : "",
+	    ztest_random(2) == 0 ? "pre" : "post", pool);
+	ztest_run_zdb(pool,run_zdb_cmd_line);
+}
+
+static void
+ztest_run_zdb(char *pool, const char *zdb_cmd_line)
 {
 	int status;
 	char zdb[MAXPATHLEN + MAXNAMELEN + 20];
@@ -3000,11 +3026,9 @@ ztest_verify_blocks(char *pool)
 #endif
 	}
 	bin = strdup(zdb);
-	(void) sprintf(zdb, "%s -bc%s%s -U -O %s %s",
+	(void) sprintf(zdb, "%s %s",
 	    bin,
-	    zopt_verbose >= 3 ? "s" : "",
-	    zopt_verbose >= 4 ? "v" : "",
-	    ztest_random(2) == 0 ? "pre" : "post", pool);
+	    zdb_cmd_line);
 	#else
 	(void) realpath(getexecname(), zdb);
 
@@ -3015,12 +3039,10 @@ ztest_verify_blocks(char *pool)
 	isalen = ztest - isa;
 	isa = strdup(isa);
 	/* LINTED */
-	(void) sprintf(bin, "/usr/sbin%.*s/zdb -bc%s%s -U -O %s %s",
+	(void) sprintf(bin, "/usr/sbin%.*s/zdb %s",
 	    isalen,
 	    isa,
-	    zopt_verbose >= 3 ? "s" : "",
-	    zopt_verbose >= 4 ? "v" : "",
-	    ztest_random(2) == 0 ? "pre" : "post", pool);
+	    zdb_cmd_line);
 	free(isa);
 	#endif
 
