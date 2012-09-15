@@ -276,8 +276,10 @@ dmu_objset_open_ds_os(dsl_dataset_t *ds, objset_t *os, dmu_objset_type_t type)
 	if (osi == NULL) {
 		err = dmu_objset_open_impl(dsl_dataset_get_spa(ds),
 		    ds, &ds->ds_phys->ds_bp, &osi);
-		if (err)
+		if (err) {
+			mutex_exit(&ds->ds_opening_lock);
 			return (err);
+		}
 	}
 	mutex_exit(&ds->ds_opening_lock);
 
