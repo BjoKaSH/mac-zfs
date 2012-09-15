@@ -42,6 +42,11 @@
 		200E788215DB15CD000957FF /* liblibnsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E784C15DB13A3000957FF /* liblibnsl.a */; };
 		200E788315DB15CD000957FF /* liblibnvpair.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E786215DB14A1000957FF /* liblibnvpair.a */; };
 		200E788615DB16DD000957FF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E788515DB16DD000957FF /* libz.dylib */; };
+		202B732B16052C3B00497583 /* ztest.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93766610A38E6300754C9E /* ztest.c */; };
+		202B733616052C6700497583 /* libzpool_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 207DBD451604953C006C7EDA /* libzpool_static.a */; };
+		202B733D16052CC300497583 /* liblibnsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E784C15DB13A3000957FF /* liblibnsl.a */; };
+		202B733E16052CC300497583 /* liblibnvpair.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E786215DB14A1000957FF /* liblibnvpair.a */; };
+		202B734B16052D2F00497583 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E788515DB16DD000957FF /* libz.dylib */; };
 		207DBD4A1604963E006C7EDA /* arc.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DB10A38E6300754C9E /* arc.c */; };
 		207DBD4B1604963E006C7EDA /* assfail.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9656A811F1BFA3001E7C56 /* assfail.c */; };
 		207DBD4C1604963E006C7EDA /* avl.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765A10A38E6300754C9E /* avl.c */; };
@@ -393,6 +398,41 @@
 			remoteGlobalIDString = 200E785715DB14A1000957FF;
 			remoteInfo = libnvpair;
 		};
+		202B733416052C5F00497583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 207DBD441604953C006C7EDA /* libzpool_static */;
+			remoteInfo = libzpool_static;
+		};
+		202B733F16052CCA00497583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200E785715DB14A1000957FF /* libnvpair */;
+			remoteInfo = libnvpair;
+		};
+		202B734116052CCE00497583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200E784B15DB13A3000957FF /* libnsl */;
+			remoteInfo = libnsl;
+		};
+		202B734316052CEA00497583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200E785715DB14A1000957FF /* libnvpair */;
+			remoteInfo = libnvpair;
+		};
+		202B734516052CF000497583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 200E784B15DB13A3000957FF /* libnsl */;
+			remoteInfo = libnsl;
+		};
 		206EDD2B15DC34A800DD2C9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -404,14 +444,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 207DBD441604953C006C7EDA /* libzpool_static */;
+			remoteGlobalIDString = 207DBD441604953C006C7EDA;
 			remoteInfo = libzpool_static;
 		};
 		207DBDC8160498CE006C7EDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 207DBD8D16049744006C7EDA /* libzfs_static */;
+			remoteGlobalIDString = 207DBD8D16049744006C7EDA;
 			remoteInfo = libzfs_static;
 		};
 		20FA07C015DBB5AE007E2315 /* PBXContainerItemProxy */ = {
@@ -625,6 +665,7 @@
 		200E786215DB14A1000957FF /* liblibnvpair.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibnvpair.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		200E787A15DB15BE000957FF /* libzpool.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libzpool.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		200E788515DB16DD000957FF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
+		202B733216052C3B00497583 /* ztest_static */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ztest_static; sourceTree = BUILT_PRODUCTS_DIR; };
 		207DBD451604953C006C7EDA /* libzpool_static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzpool_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		207DBD8E16049744006C7EDA /* libzfs_static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzfs_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		207DBDC416049893006C7EDA /* zdb_static */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = zdb_static; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -954,6 +995,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		202B732C16052C3B00497583 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				202B733D16052CC300497583 /* liblibnsl.a in Frameworks */,
+				202B733E16052CC300497583 /* liblibnvpair.a in Frameworks */,
+				202B733616052C6700497583 /* libzpool_static.a in Frameworks */,
+				202B734B16052D2F00497583 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		207DBD431604953C006C7EDA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1075,6 +1127,7 @@
 				207DBD451604953C006C7EDA /* libzpool_static.a */,
 				207DBD8E16049744006C7EDA /* libzfs_static.a */,
 				207DBDC416049893006C7EDA /* zdb_static */,
+				202B733216052C3B00497583 /* ztest_static */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1887,6 +1940,25 @@
 			productReference = 200E787A15DB15BE000957FF /* libzpool.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
+		202B732716052C3B00497583 /* ztest_static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 202B732E16052C3B00497583 /* Build configuration list for PBXNativeTarget "ztest_static" */;
+			buildPhases = (
+				202B732A16052C3B00497583 /* Sources */,
+				202B732C16052C3B00497583 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				202B734216052CCE00497583 /* PBXTargetDependency */,
+				202B734016052CCA00497583 /* PBXTargetDependency */,
+				202B733516052C5F00497583 /* PBXTargetDependency */,
+			);
+			name = ztest_static;
+			productName = ztest;
+			productReference = 202B733216052C3B00497583 /* ztest_static */;
+			productType = "com.apple.product-type.tool";
+		};
 		207DBD441604953C006C7EDA /* libzpool_static */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 207DBD491604955B006C7EDA /* Build configuration list for PBXNativeTarget "libzpool_static" */;
@@ -1931,6 +2003,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				202B734616052CF000497583 /* PBXTargetDependency */,
+				202B734416052CEA00497583 /* PBXTargetDependency */,
 				207DBDC7160498C8006C7EDA /* PBXTargetDependency */,
 				207DBDC9160498CE006C7EDA /* PBXTargetDependency */,
 			);
@@ -2140,6 +2214,7 @@
 				207DBD441604953C006C7EDA /* libzpool_static */,
 				207DBD8D16049744006C7EDA /* libzfs_static */,
 				207DBDB516049893006C7EDA /* zdb_static */,
+				202B732716052C3B00497583 /* ztest_static */,
 			);
 		};
 /* End PBXProject section */
@@ -2283,6 +2358,14 @@
 				20FA076615DBB111007E2315 /* avl.c in Sources */,
 				20FA076515DBB0AF007E2315 /* assfail.c in Sources */,
 				20FA076415DBB067007E2315 /* arc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		202B732A16052C3B00497583 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				202B732B16052C3B00497583 /* ztest.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2608,6 +2691,31 @@
 			isa = PBXTargetDependency;
 			target = 200E785715DB14A1000957FF /* libnvpair */;
 			targetProxy = 200E788015DB15C7000957FF /* PBXContainerItemProxy */;
+		};
+		202B733516052C5F00497583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 207DBD441604953C006C7EDA /* libzpool_static */;
+			targetProxy = 202B733416052C5F00497583 /* PBXContainerItemProxy */;
+		};
+		202B734016052CCA00497583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200E785715DB14A1000957FF /* libnvpair */;
+			targetProxy = 202B733F16052CCA00497583 /* PBXContainerItemProxy */;
+		};
+		202B734216052CCE00497583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200E784B15DB13A3000957FF /* libnsl */;
+			targetProxy = 202B734116052CCE00497583 /* PBXContainerItemProxy */;
+		};
+		202B734416052CEA00497583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200E785715DB14A1000957FF /* libnvpair */;
+			targetProxy = 202B734316052CEA00497583 /* PBXContainerItemProxy */;
+		};
+		202B734616052CF000497583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 200E784B15DB13A3000957FF /* libnsl */;
+			targetProxy = 202B734516052CF000497583 /* PBXContainerItemProxy */;
 		};
 		206EDD2C15DC34A800DD2C9E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3337,6 +3445,72 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = libzpool;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		202B732F16052C3B00497583 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/bin;
+				OTHER_CFLAGS = (
+					"-v",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ztest_static;
+			};
+			name = Debug;
+		};
+		202B733016052C3B00497583 /* DebugLLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/bin;
+				OTHER_CFLAGS = (
+					"-v",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ztest_static;
+			};
+			name = DebugLLVM;
+		};
+		202B733116052C3B00497583 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/bin;
+				OTHER_CFLAGS = (
+					"-v",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ztest_static;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -4220,6 +4394,16 @@
 				200E787B15DB15BE000957FF /* Debug */,
 				200E787C15DB15BE000957FF /* DebugLLVM */,
 				200E787D15DB15BE000957FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		202B732E16052C3B00497583 /* Build configuration list for PBXNativeTarget "ztest_static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				202B732F16052C3B00497583 /* Debug */,
+				202B733016052C3B00497583 /* DebugLLVM */,
+				202B733116052C3B00497583 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
