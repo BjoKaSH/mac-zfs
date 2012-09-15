@@ -580,9 +580,10 @@ zpool_do_create(int argc, char **argv)
 	uint_t children;
 	nvlist_t *props = NULL;
 	char *propval;
+    int no_mount_opt = 0;
 
 	/* check options */
-	while ((c = getopt(argc, argv, ":fnR:m:o:")) != -1) {
+	while ((c = getopt(argc, argv, ":fnNR:m:o:")) != -1) {
 		switch (c) {
 		case 'f':
 			force = B_TRUE;
@@ -606,6 +607,9 @@ zpool_do_create(int argc, char **argv)
 		case 'm':
 			mountpoint = optarg;
 			break;
+        case 'N':
+            no_mount_opt = 1;
+            break;
 		case 'o':
 			if ((propval = strchr(optarg, '=')) == NULL) {
 				(void) fprintf(stderr, gettext("missing "
@@ -758,8 +762,10 @@ zpool_do_create(int argc, char **argv)
 					    zfs_prop_to_name(
 					    ZFS_PROP_MOUNTPOINT),
 					    mountpoint) == 0);
-				if (zfs_mount(pool, NULL, 0) == 0)
-					ret = zfs_shareall(pool);
+                if (no_mount_opt == 0) { 
+                    if (zfs_mount(pool, NULL, 0) == 0)
+                        ret = zfs_shareall(pool);
+                }
 				zfs_close(pool);
 			}
 		} else if (libzfs_errno(g_zfs) == EZFS_INVALIDNAME) {
