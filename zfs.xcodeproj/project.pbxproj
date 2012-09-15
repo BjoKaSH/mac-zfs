@@ -42,6 +42,111 @@
 		200E788215DB15CD000957FF /* liblibnsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E784C15DB13A3000957FF /* liblibnsl.a */; };
 		200E788315DB15CD000957FF /* liblibnvpair.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E786215DB14A1000957FF /* liblibnvpair.a */; };
 		200E788615DB16DD000957FF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E788515DB16DD000957FF /* libz.dylib */; };
+		207DBD4A1604963E006C7EDA /* arc.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DB10A38E6300754C9E /* arc.c */; };
+		207DBD4B1604963E006C7EDA /* assfail.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9656A811F1BFA3001E7C56 /* assfail.c */; };
+		207DBD4C1604963E006C7EDA /* avl.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765A10A38E6300754C9E /* avl.c */; };
+		207DBD4D1604963E006C7EDA /* bplist.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DD10A38E6300754C9E /* bplist.c */; };
+		207DBD4E1604963E006C7EDA /* dbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760910A38E6300754C9E /* dbuf.c */; };
+		207DBD4F1604963E006C7EDA /* dmu.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DF10A38E6300754C9E /* dmu.c */; };
+		207DBD501604963E006C7EDA /* dmu_object.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DE10A38E6300754C9E /* dmu_object.c */; };
+		207DBD511604963E006C7EDA /* dmu_objset.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375ED10A38E6300754C9E /* dmu_objset.c */; };
+		207DBD521604963E006C7EDA /* dmu_send.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D410A38E6300754C9E /* dmu_send.c */; };
+		207DBD531604963E006C7EDA /* dmu_traverse.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375CB10A38E6300754C9E /* dmu_traverse.c */; };
+		207DBD541604963E006C7EDA /* dmu_tx.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D210A38E6300754C9E /* dmu_tx.c */; };
+		207DBD551604963E006C7EDA /* dmu_zfetch.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F810A38E6300754C9E /* dmu_zfetch.c */; };
+		207DBD561604963E006C7EDA /* dnode.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375FD10A38E6300754C9E /* dnode.c */; };
+		207DBD571604963E006C7EDA /* dnode_sync.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375CD10A38E6300754C9E /* dnode_sync.c */; };
+		207DBD581604963E006C7EDA /* dsl_dataset.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DA10A38E6300754C9E /* dsl_dataset.c */; };
+		207DBD591604963E006C7EDA /* dsl_deleg.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D910A38E6300754C9E /* dsl_deleg.c */; };
+		207DBD5A1604963E006C7EDA /* dsl_dir.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F610A38E6300754C9E /* dsl_dir.c */; };
+		207DBD5B1604963E006C7EDA /* dsl_pool.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D710A38E6300754C9E /* dsl_pool.c */; };
+		207DBD5C1604963E006C7EDA /* dsl_prop.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D510A38E6300754C9E /* dsl_prop.c */; };
+		207DBD5D1604963E006C7EDA /* dsl_synctask.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375FF10A38E6300754C9E /* dsl_synctask.c */; };
+		207DBD5E1604963E006C7EDA /* fletcher.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375CF10A38E6300754C9E /* fletcher.c */; };
+		207DBD5F1604963E006C7EDA /* gzip.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375CE10A38E6300754C9E /* gzip.c */; };
+		207DBD601604963E006C7EDA /* kernel.c in Sources */ = {isa = PBXBuildFile; fileRef = 20FA077C15DBB1DD007E2315 /* kernel.c */; };
+		207DBD611604963E006C7EDA /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93764510A38E6300754C9E /* list.c */; };
+		207DBD621604963E006C7EDA /* lzjb.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D010A38E6300754C9E /* lzjb.c */; };
+		207DBD631604963E006C7EDA /* metaslab.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93763F10A38E6300754C9E /* metaslab.c */; };
+		207DBD641604963E006C7EDA /* refcount.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E310A38E6300754C9E /* refcount.c */; };
+		207DBD651604963E006C7EDA /* rprwlock.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375FB10A38E6300754C9E /* rprwlock.c */; };
+		207DBD661604963E006C7EDA /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93764110A38E6300754C9E /* sha256.c */; };
+		207DBD671604963E006C7EDA /* spa.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375EA10A38E6300754C9E /* spa.c */; };
+		207DBD681604963E006C7EDA /* spa_config.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760610A38E6300754C9E /* spa_config.c */; };
+		207DBD691604963E006C7EDA /* spa_errlog.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760110A38E6300754C9E /* spa_errlog.c */; };
+		207DBD6A1604963E006C7EDA /* spa_history.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E610A38E6300754C9E /* spa_history.c */; };
+		207DBD6B1604963E006C7EDA /* spa_misc.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F210A38E6300754C9E /* spa_misc.c */; };
+		207DBD6C1604963E006C7EDA /* space_map.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93763E10A38E6300754C9E /* space_map.c */; };
+		207DBD6D1604963E006C7EDA /* taskq.c in Sources */ = {isa = PBXBuildFile; fileRef = 20FA078115DBB1DD007E2315 /* taskq.c */; };
+		207DBD6E1604963E006C7EDA /* txg.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D610A38E6300754C9E /* txg.c */; };
+		207DBD6F1604963E006C7EDA /* uberblock.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375FC10A38E6300754C9E /* uberblock.c */; };
+		207DBD701604963E006C7EDA /* unique.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760810A38E6300754C9E /* unique.c */; };
+		207DBD711604963E006C7EDA /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 20FA078215DBB1DD007E2315 /* util.c */; };
+		207DBD721604963E006C7EDA /* vdev.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375EF10A38E6300754C9E /* vdev.c */; };
+		207DBD731604963E006C7EDA /* vdev_cache.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E110A38E6300754C9E /* vdev_cache.c */; };
+		207DBD741604963E006C7EDA /* vdev_file.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E910A38E6300754C9E /* vdev_file.c */; };
+		207DBD751604963E006C7EDA /* vdev_label.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F910A38E6300754C9E /* vdev_label.c */; };
+		207DBD761604963E006C7EDA /* vdev_mirror.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760010A38E6300754C9E /* vdev_mirror.c */; };
+		207DBD771604963E006C7EDA /* vdev_missing.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375EB10A38E6300754C9E /* vdev_missing.c */; };
+		207DBD781604963E006C7EDA /* vdev_queue.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E010A38E6300754C9E /* vdev_queue.c */; };
+		207DBD791604963E006C7EDA /* vdev_raidz.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375EC10A38E6300754C9E /* vdev_raidz.c */; };
+		207DBD7A1604963E006C7EDA /* vdev_root.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F710A38E6300754C9E /* vdev_root.c */; };
+		207DBD7B1604963E006C7EDA /* zap.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760310A38E6300754C9E /* zap.c */; };
+		207DBD7C1604963E006C7EDA /* zap_leaf.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F010A38E6300754C9E /* zap_leaf.c */; };
+		207DBD7D1604963E006C7EDA /* zap_micro.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375EE10A38E6300754C9E /* zap_micro.c */; };
+		207DBD7E1604963E006C7EDA /* zfs_byteswap.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D310A38E6300754C9E /* zfs_byteswap.c */; };
+		207DBD7F1604963E006C7EDA /* zfs_context_libzpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 20FA07B215DBB4B9007E2315 /* zfs_context_libzpool.c */; };
+		207DBD801604963E006C7EDA /* zfs_deleg.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9376A510A38FB500754C9E /* zfs_deleg.c */; };
+		207DBD811604963E006C7EDA /* zfs_fm.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375CC10A38E6300754C9E /* zfs_fm.c */; };
+		207DBD821604963E006C7EDA /* zfs_namecheck.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9376A310A38FB500754C9E /* zfs_namecheck.c */; };
+		207DBD831604963E006C7EDA /* zfs_prop.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9376A110A38FB500754C9E /* zfs_prop.c */; };
+		207DBD841604963E006C7EDA /* zfs_znode.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E710A38E6300754C9E /* zfs_znode.c */; };
+		207DBD851604963E006C7EDA /* zil.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375E810A38E6300754C9E /* zil.c */; };
+		207DBD861604963E006C7EDA /* zio.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DC10A38E6300754C9E /* zio.c */; };
+		207DBD871604963E006C7EDA /* zio_checksum.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375F510A38E6300754C9E /* zio_checksum.c */; };
+		207DBD881604963E006C7EDA /* zio_compress.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93760510A38E6300754C9E /* zio_compress.c */; };
+		207DBD891604963E006C7EDA /* zio_inject.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375D810A38E6300754C9E /* zio_inject.c */; };
+		207DBD93160497FA006C7EDA /* assfail.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9656A811F1BFA3001E7C56 /* assfail.c */; };
+		207DBD94160497FA006C7EDA /* avl.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765A10A38E6300754C9E /* avl.c */; };
+		207DBD95160497FA006C7EDA /* deviceid.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757B10A38E6300754C9E /* deviceid.c */; };
+		207DBD96160497FA006C7EDA /* devid.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765C10A38E6300754C9E /* devid.c */; };
+		207DBD97160497FA006C7EDA /* libnvpair.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756010A38E6300754C9E /* libnvpair.c */; };
+		207DBD98160497FA006C7EDA /* libzfs_changelist.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757210A38E6300754C9E /* libzfs_changelist.c */; };
+		207DBD99160497FA006C7EDA /* libzfs_config.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757010A38E6300754C9E /* libzfs_config.c */; };
+		207DBD9A160497FA006C7EDA /* libzfs_dataset.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757710A38E6300754C9E /* libzfs_dataset.c */; };
+		207DBD9B160497FA006C7EDA /* libzfs_graph.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756F10A38E6300754C9E /* libzfs_graph.c */; };
+		207DBD9C160497FA006C7EDA /* libzfs_import.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757310A38E6300754C9E /* libzfs_import.c */; };
+		207DBD9D160497FA006C7EDA /* libzfs_mount.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756E10A38E6300754C9E /* libzfs_mount.c */; };
+		207DBD9E160497FA006C7EDA /* libzfs_pool.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757610A38E6300754C9E /* libzfs_pool.c */; };
+		207DBD9F160497FA006C7EDA /* libzfs_status.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757510A38E6300754C9E /* libzfs_status.c */; };
+		207DBDA0160497FA006C7EDA /* libzfs_util.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757410A38E6300754C9E /* libzfs_util.c */; };
+		207DBDA1160497FA006C7EDA /* mkdirp.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758C10A38E6300754C9E /* mkdirp.c */; };
+		207DBDA2160497FA006C7EDA /* nvpair.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765410A38E6300754C9E /* nvpair.c */; };
+		207DBDA3160497FA006C7EDA /* nvpair_alloc_fixed.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765510A38E6300754C9E /* nvpair_alloc_fixed.c */; };
+		207DBDA4160497FA006C7EDA /* nvpair_alloc_system.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756210A38E6300754C9E /* nvpair_alloc_system.c */; };
+		207DBDA5160497FA006C7EDA /* qsort.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765710A38E6300754C9E /* qsort.c */; };
+		207DBDA6160497FA006C7EDA /* uu_alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758210A38E6300754C9E /* uu_alloc.c */; };
+		207DBDA7160497FA006C7EDA /* uu_avl.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758610A38E6300754C9E /* uu_avl.c */; };
+		207DBDA8160497FA006C7EDA /* uu_dprintf.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758710A38E6300754C9E /* uu_dprintf.c */; };
+		207DBDA9160497FA006C7EDA /* uu_ident.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758510A38E6300754C9E /* uu_ident.c */; };
+		207DBDAA160497FA006C7EDA /* uu_list.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757E10A38E6300754C9E /* uu_list.c */; };
+		207DBDAB160497FA006C7EDA /* uu_misc.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93757F10A38E6300754C9E /* uu_misc.c */; };
+		207DBDAC160497FA006C7EDA /* uu_open.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758810A38E6300754C9E /* uu_open.c */; };
+		207DBDAD160497FA006C7EDA /* uu_pname.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758410A38E6300754C9E /* uu_pname.c */; };
+		207DBDAE160497FA006C7EDA /* uu_strtoint.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93758310A38E6300754C9E /* uu_strtoint.c */; };
+		207DBDAF160497FA006C7EDA /* xdr.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756910A38E6300754C9E /* xdr.c */; };
+		207DBDB0160497FA006C7EDA /* xdr_array.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756A10A38E6300754C9E /* xdr_array.c */; };
+		207DBDB1160497FA006C7EDA /* xdr_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93756810A38E6300754C9E /* xdr_mem.c */; };
+		207DBDB2160497FA006C7EDA /* zfs_deleg.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9376A510A38FB500754C9E /* zfs_deleg.c */; };
+		207DBDB3160497FA006C7EDA /* zfs_namecheck.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9376A310A38FB500754C9E /* zfs_namecheck.c */; };
+		207DBDB4160497FA006C7EDA /* zfs_prop.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9376A110A38FB500754C9E /* zfs_prop.c */; };
+		207DBDBB16049893006C7EDA /* zdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 20FA07EC15DBB806007E2315 /* zdb.c */; };
+		207DBDBC16049893006C7EDA /* zdb_il.c in Sources */ = {isa = PBXBuildFile; fileRef = 20FA07ED15DBB806007E2315 /* zdb_il.c */; };
+		207DBDCA160498DE006C7EDA /* libzfs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 207DBD8E16049744006C7EDA /* libzfs_static.a */; };
+		207DBDCB160498DE006C7EDA /* libzpool_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 207DBD451604953C006C7EDA /* libzpool_static.a */; };
+		207DBDCC160498E6006C7EDA /* liblibnsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E784C15DB13A3000957FF /* liblibnsl.a */; };
+		207DBDCD160498E6006C7EDA /* liblibnvpair.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E786215DB14A1000957FF /* liblibnvpair.a */; };
+		207DBDCE160498FA006C7EDA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 200E788515DB16DD000957FF /* libz.dylib */; };
 		20FA076415DBB067007E2315 /* arc.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9375DB10A38E6300754C9E /* arc.c */; };
 		20FA076515DBB0AF007E2315 /* assfail.c in Sources */ = {isa = PBXBuildFile; fileRef = FA9656A811F1BFA3001E7C56 /* assfail.c */; };
 		20FA076615DBB111007E2315 /* avl.c in Sources */ = {isa = PBXBuildFile; fileRef = FA93765A10A38E6300754C9E /* avl.c */; };
@@ -292,8 +397,22 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 200E787915DB15BE000957FF /* libzpool */;
+			remoteGlobalIDString = 200E787915DB15BE000957FF;
 			remoteInfo = libzpool;
+		};
+		207DBDC6160498C8006C7EDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 207DBD441604953C006C7EDA /* libzpool_static */;
+			remoteInfo = libzpool_static;
+		};
+		207DBDC8160498CE006C7EDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 207DBD8D16049744006C7EDA /* libzfs_static */;
+			remoteInfo = libzfs_static;
 		};
 		20FA07C015DBB5AE007E2315 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -506,6 +625,9 @@
 		200E786215DB14A1000957FF /* liblibnvpair.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibnvpair.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		200E787A15DB15BE000957FF /* libzpool.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libzpool.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		200E788515DB16DD000957FF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
+		207DBD451604953C006C7EDA /* libzpool_static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzpool_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		207DBD8E16049744006C7EDA /* libzfs_static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzfs_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		207DBDC416049893006C7EDA /* zdb_static */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = zdb_static; sourceTree = BUILT_PRODUCTS_DIR; };
 		20FA077C15DBB1DD007E2315 /* kernel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = kernel.c; sourceTree = "<group>"; };
 		20FA077D15DBB1DD007E2315 /* llib-lzpool */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "llib-lzpool"; sourceTree = "<group>"; };
 		20FA077F15DBB1DD007E2315 /* zfs_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zfs_context.h; sourceTree = "<group>"; };
@@ -832,6 +954,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		207DBD431604953C006C7EDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		207DBD8C16049744006C7EDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		207DBDBD16049893006C7EDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				207DBDCA160498DE006C7EDA /* libzfs_static.a in Frameworks */,
+				207DBDCB160498DE006C7EDA /* libzpool_static.a in Frameworks */,
+				207DBDCC160498E6006C7EDA /* liblibnsl.a in Frameworks */,
+				207DBDCD160498E6006C7EDA /* liblibnvpair.a in Frameworks */,
+				207DBDCE160498FA006C7EDA /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		20FA07C715DBB5AE007E2315 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -924,6 +1072,9 @@
 				200E786215DB14A1000957FF /* liblibnvpair.a */,
 				200E787A15DB15BE000957FF /* libzpool.dylib */,
 				20FA07CC15DBB5AE007E2315 /* zdb */,
+				207DBD451604953C006C7EDA /* libzpool_static.a */,
+				207DBD8E16049744006C7EDA /* libzfs_static.a */,
+				207DBDC416049893006C7EDA /* zdb_static */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1637,6 +1788,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		207DBD411604953C006C7EDA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		207DBD8A16049744006C7EDA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		269640680AACEAD20073456B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1721,6 +1886,58 @@
 			productName = libzpool;
 			productReference = 200E787A15DB15BE000957FF /* libzpool.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
+		};
+		207DBD441604953C006C7EDA /* libzpool_static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 207DBD491604955B006C7EDA /* Build configuration list for PBXNativeTarget "libzpool_static" */;
+			buildPhases = (
+				207DBD411604953C006C7EDA /* Headers */,
+				207DBD421604953C006C7EDA /* Sources */,
+				207DBD431604953C006C7EDA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libzpool_static;
+			productName = libzpool_static;
+			productReference = 207DBD451604953C006C7EDA /* libzpool_static.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		207DBD8D16049744006C7EDA /* libzfs_static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 207DBD9216049762006C7EDA /* Build configuration list for PBXNativeTarget "libzfs_static" */;
+			buildPhases = (
+				207DBD8A16049744006C7EDA /* Headers */,
+				207DBD8B16049744006C7EDA /* Sources */,
+				207DBD8C16049744006C7EDA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libzfs_static;
+			productName = libzfs_static;
+			productReference = 207DBD8E16049744006C7EDA /* libzfs_static.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		207DBDB516049893006C7EDA /* zdb_static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 207DBDC016049893006C7EDA /* Build configuration list for PBXNativeTarget "zdb_static" */;
+			buildPhases = (
+				207DBDBA16049893006C7EDA /* Sources */,
+				207DBDBD16049893006C7EDA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				207DBDC7160498C8006C7EDA /* PBXTargetDependency */,
+				207DBDC9160498CE006C7EDA /* PBXTargetDependency */,
+			);
+			name = zdb_static;
+			productName = ztest;
+			productReference = 207DBDC416049893006C7EDA /* zdb_static */;
+			productType = "com.apple.product-type.tool";
 		};
 		20FA07BE15DBB5AE007E2315 /* zdb */ = {
 			isa = PBXNativeTarget;
@@ -1920,6 +2137,9 @@
 				200E785715DB14A1000957FF /* libnvpair */,
 				200E787915DB15BE000957FF /* libzpool */,
 				20FA07BE15DBB5AE007E2315 /* zdb */,
+				207DBD441604953C006C7EDA /* libzpool_static */,
+				207DBD8D16049744006C7EDA /* libzfs_static */,
+				207DBDB516049893006C7EDA /* zdb_static */,
 			);
 		};
 /* End PBXProject section */
@@ -2063,6 +2283,127 @@
 				20FA076615DBB111007E2315 /* avl.c in Sources */,
 				20FA076515DBB0AF007E2315 /* assfail.c in Sources */,
 				20FA076415DBB067007E2315 /* arc.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		207DBD421604953C006C7EDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				207DBD4A1604963E006C7EDA /* arc.c in Sources */,
+				207DBD4B1604963E006C7EDA /* assfail.c in Sources */,
+				207DBD4C1604963E006C7EDA /* avl.c in Sources */,
+				207DBD4D1604963E006C7EDA /* bplist.c in Sources */,
+				207DBD4E1604963E006C7EDA /* dbuf.c in Sources */,
+				207DBD4F1604963E006C7EDA /* dmu.c in Sources */,
+				207DBD501604963E006C7EDA /* dmu_object.c in Sources */,
+				207DBD511604963E006C7EDA /* dmu_objset.c in Sources */,
+				207DBD521604963E006C7EDA /* dmu_send.c in Sources */,
+				207DBD531604963E006C7EDA /* dmu_traverse.c in Sources */,
+				207DBD541604963E006C7EDA /* dmu_tx.c in Sources */,
+				207DBD551604963E006C7EDA /* dmu_zfetch.c in Sources */,
+				207DBD561604963E006C7EDA /* dnode.c in Sources */,
+				207DBD571604963E006C7EDA /* dnode_sync.c in Sources */,
+				207DBD581604963E006C7EDA /* dsl_dataset.c in Sources */,
+				207DBD591604963E006C7EDA /* dsl_deleg.c in Sources */,
+				207DBD5A1604963E006C7EDA /* dsl_dir.c in Sources */,
+				207DBD5B1604963E006C7EDA /* dsl_pool.c in Sources */,
+				207DBD5C1604963E006C7EDA /* dsl_prop.c in Sources */,
+				207DBD5D1604963E006C7EDA /* dsl_synctask.c in Sources */,
+				207DBD5E1604963E006C7EDA /* fletcher.c in Sources */,
+				207DBD5F1604963E006C7EDA /* gzip.c in Sources */,
+				207DBD601604963E006C7EDA /* kernel.c in Sources */,
+				207DBD611604963E006C7EDA /* list.c in Sources */,
+				207DBD621604963E006C7EDA /* lzjb.c in Sources */,
+				207DBD631604963E006C7EDA /* metaslab.c in Sources */,
+				207DBD641604963E006C7EDA /* refcount.c in Sources */,
+				207DBD651604963E006C7EDA /* rprwlock.c in Sources */,
+				207DBD661604963E006C7EDA /* sha256.c in Sources */,
+				207DBD671604963E006C7EDA /* spa.c in Sources */,
+				207DBD681604963E006C7EDA /* spa_config.c in Sources */,
+				207DBD691604963E006C7EDA /* spa_errlog.c in Sources */,
+				207DBD6A1604963E006C7EDA /* spa_history.c in Sources */,
+				207DBD6B1604963E006C7EDA /* spa_misc.c in Sources */,
+				207DBD6C1604963E006C7EDA /* space_map.c in Sources */,
+				207DBD6D1604963E006C7EDA /* taskq.c in Sources */,
+				207DBD6E1604963E006C7EDA /* txg.c in Sources */,
+				207DBD6F1604963E006C7EDA /* uberblock.c in Sources */,
+				207DBD701604963E006C7EDA /* unique.c in Sources */,
+				207DBD711604963E006C7EDA /* util.c in Sources */,
+				207DBD721604963E006C7EDA /* vdev.c in Sources */,
+				207DBD731604963E006C7EDA /* vdev_cache.c in Sources */,
+				207DBD741604963E006C7EDA /* vdev_file.c in Sources */,
+				207DBD751604963E006C7EDA /* vdev_label.c in Sources */,
+				207DBD761604963E006C7EDA /* vdev_mirror.c in Sources */,
+				207DBD771604963E006C7EDA /* vdev_missing.c in Sources */,
+				207DBD781604963E006C7EDA /* vdev_queue.c in Sources */,
+				207DBD791604963E006C7EDA /* vdev_raidz.c in Sources */,
+				207DBD7A1604963E006C7EDA /* vdev_root.c in Sources */,
+				207DBD7B1604963E006C7EDA /* zap.c in Sources */,
+				207DBD7C1604963E006C7EDA /* zap_leaf.c in Sources */,
+				207DBD7D1604963E006C7EDA /* zap_micro.c in Sources */,
+				207DBD7E1604963E006C7EDA /* zfs_byteswap.c in Sources */,
+				207DBD7F1604963E006C7EDA /* zfs_context_libzpool.c in Sources */,
+				207DBD801604963E006C7EDA /* zfs_deleg.c in Sources */,
+				207DBD811604963E006C7EDA /* zfs_fm.c in Sources */,
+				207DBD821604963E006C7EDA /* zfs_namecheck.c in Sources */,
+				207DBD831604963E006C7EDA /* zfs_prop.c in Sources */,
+				207DBD841604963E006C7EDA /* zfs_znode.c in Sources */,
+				207DBD851604963E006C7EDA /* zil.c in Sources */,
+				207DBD861604963E006C7EDA /* zio.c in Sources */,
+				207DBD871604963E006C7EDA /* zio_checksum.c in Sources */,
+				207DBD881604963E006C7EDA /* zio_compress.c in Sources */,
+				207DBD891604963E006C7EDA /* zio_inject.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		207DBD8B16049744006C7EDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				207DBD93160497FA006C7EDA /* assfail.c in Sources */,
+				207DBD94160497FA006C7EDA /* avl.c in Sources */,
+				207DBD95160497FA006C7EDA /* deviceid.c in Sources */,
+				207DBD96160497FA006C7EDA /* devid.c in Sources */,
+				207DBD97160497FA006C7EDA /* libnvpair.c in Sources */,
+				207DBD98160497FA006C7EDA /* libzfs_changelist.c in Sources */,
+				207DBD99160497FA006C7EDA /* libzfs_config.c in Sources */,
+				207DBD9A160497FA006C7EDA /* libzfs_dataset.c in Sources */,
+				207DBD9B160497FA006C7EDA /* libzfs_graph.c in Sources */,
+				207DBD9C160497FA006C7EDA /* libzfs_import.c in Sources */,
+				207DBD9D160497FA006C7EDA /* libzfs_mount.c in Sources */,
+				207DBD9E160497FA006C7EDA /* libzfs_pool.c in Sources */,
+				207DBD9F160497FA006C7EDA /* libzfs_status.c in Sources */,
+				207DBDA0160497FA006C7EDA /* libzfs_util.c in Sources */,
+				207DBDA1160497FA006C7EDA /* mkdirp.c in Sources */,
+				207DBDA2160497FA006C7EDA /* nvpair.c in Sources */,
+				207DBDA3160497FA006C7EDA /* nvpair_alloc_fixed.c in Sources */,
+				207DBDA4160497FA006C7EDA /* nvpair_alloc_system.c in Sources */,
+				207DBDA5160497FA006C7EDA /* qsort.c in Sources */,
+				207DBDA6160497FA006C7EDA /* uu_alloc.c in Sources */,
+				207DBDA7160497FA006C7EDA /* uu_avl.c in Sources */,
+				207DBDA8160497FA006C7EDA /* uu_dprintf.c in Sources */,
+				207DBDA9160497FA006C7EDA /* uu_ident.c in Sources */,
+				207DBDAA160497FA006C7EDA /* uu_list.c in Sources */,
+				207DBDAB160497FA006C7EDA /* uu_misc.c in Sources */,
+				207DBDAC160497FA006C7EDA /* uu_open.c in Sources */,
+				207DBDAD160497FA006C7EDA /* uu_pname.c in Sources */,
+				207DBDAE160497FA006C7EDA /* uu_strtoint.c in Sources */,
+				207DBDAF160497FA006C7EDA /* xdr.c in Sources */,
+				207DBDB0160497FA006C7EDA /* xdr_array.c in Sources */,
+				207DBDB1160497FA006C7EDA /* xdr_mem.c in Sources */,
+				207DBDB2160497FA006C7EDA /* zfs_deleg.c in Sources */,
+				207DBDB3160497FA006C7EDA /* zfs_namecheck.c in Sources */,
+				207DBDB4160497FA006C7EDA /* zfs_prop.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		207DBDBA16049893006C7EDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				207DBDBB16049893006C7EDA /* zdb.c in Sources */,
+				207DBDBC16049893006C7EDA /* zdb_il.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2272,6 +2613,16 @@
 			isa = PBXTargetDependency;
 			target = 200E787915DB15BE000957FF /* libzpool */;
 			targetProxy = 206EDD2B15DC34A800DD2C9E /* PBXContainerItemProxy */;
+		};
+		207DBDC7160498C8006C7EDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 207DBD441604953C006C7EDA /* libzpool_static */;
+			targetProxy = 207DBDC6160498C8006C7EDA /* PBXContainerItemProxy */;
+		};
+		207DBDC9160498CE006C7EDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 207DBD8D16049744006C7EDA /* libzfs_static */;
+			targetProxy = 207DBDC8160498CE006C7EDA /* PBXContainerItemProxy */;
 		};
 		20FA07BF15DBB5AE007E2315 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2990,6 +3341,288 @@
 			};
 			name = Release;
 		};
+		207DBD461604953D006C7EDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				EXECUTABLE_PREFIX = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					LIBZPOOL_HACK,
+					DEBUG,
+				);
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = (
+					"-isystem",
+					"$(SRCROOT)/usr/src/head",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzfs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libuutil",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libuutil/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libnvpair",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzfs/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzpool/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/libgen/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/common/zfs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/fs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/fs/zfs/",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/sys",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+					"-v",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = libzpool_static;
+			};
+			name = Debug;
+		};
+		207DBD471604953D006C7EDA /* DebugLLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				EXECUTABLE_PREFIX = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					LIBZPOOL_HACK,
+					DEBUG,
+				);
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = (
+					"-isystem",
+					"$(SRCROOT)/usr/src/head",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzfs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libuutil",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libuutil/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libnvpair",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzfs/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzpool/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/libgen/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/common/zfs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/fs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/fs/zfs/",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/sys",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+					"-v",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = libzpool_static;
+			};
+			name = DebugLLVM;
+		};
+		207DBD481604953D006C7EDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_PREFIX = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = LIBZPOOL_HACK;
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_CFLAGS = (
+					"-isystem",
+					"$(SRCROOT)/usr/src/head",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzfs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libuutil",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libuutil/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libnvpair",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzfs/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/lib/libzpool/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/libgen/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/common/zfs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/fs",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/fs/zfs/",
+					"-isystem",
+					"$(SRCROOT)/usr/src/uts/common/sys",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+					"-v",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = libzpool_static;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		207DBD8F16049744006C7EDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = NO;
+				EXECUTABLE_PREFIX = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "TEXT_DOMAIN=0";
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = libzfs_static;
+			};
+			name = Debug;
+		};
+		207DBD9016049744006C7EDA /* DebugLLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				EXECUTABLE_PREFIX = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = "TEXT_DOMAIN=0";
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = libzfs_static;
+			};
+			name = DebugLLVM;
+		};
+		207DBD9116049744006C7EDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EXECUTABLE_PREFIX = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = "TEXT_DOMAIN=0";
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = libzfs_static;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		207DBDC116049893006C7EDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/sbin;
+				OTHER_CFLAGS = (
+					"-v",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = zdb_static;
+			};
+			name = Debug;
+		};
+		207DBDC216049893006C7EDA /* DebugLLVM */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/sbin;
+				OTHER_CFLAGS = (
+					"-v",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = zdb_static;
+			};
+			name = DebugLLVM;
+		};
+		207DBDC316049893006C7EDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/sbin;
+				OTHER_CFLAGS = (
+					"-v",
+					"-include",
+					"$(SRCROOT)/usr/src/uts/common/sys/types.h",
+					"-include",
+					"$(SRCROOT)/usr/src/lib/libzpool/common/sys/zfs_context.h",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = zdb_static;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		20FA07C915DBB5AE007E2315 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3587,6 +4220,36 @@
 				200E787B15DB15BE000957FF /* Debug */,
 				200E787C15DB15BE000957FF /* DebugLLVM */,
 				200E787D15DB15BE000957FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		207DBD491604955B006C7EDA /* Build configuration list for PBXNativeTarget "libzpool_static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				207DBD461604953D006C7EDA /* Debug */,
+				207DBD471604953D006C7EDA /* DebugLLVM */,
+				207DBD481604953D006C7EDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		207DBD9216049762006C7EDA /* Build configuration list for PBXNativeTarget "libzfs_static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				207DBD8F16049744006C7EDA /* Debug */,
+				207DBD9016049744006C7EDA /* DebugLLVM */,
+				207DBD9116049744006C7EDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		207DBDC016049893006C7EDA /* Build configuration list for PBXNativeTarget "zdb_static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				207DBDC116049893006C7EDA /* Debug */,
+				207DBDC216049893006C7EDA /* DebugLLVM */,
+				207DBDC316049893006C7EDA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
