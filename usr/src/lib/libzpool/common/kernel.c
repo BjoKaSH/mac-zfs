@@ -965,6 +965,7 @@ z_compress_level(void *dst, size_t *dstlen, const void *src, size_t srclen,
 	return (ret);
 }
 
+#if 0
 /*ARGSUSED*/
 size_t u8_textprep_str(char *i, size_t *il, char *o, size_t *ol, int nf,
     size_t vers, int *err)
@@ -972,6 +973,7 @@ size_t u8_textprep_str(char *i, size_t *il, char *o, size_t *ol, int nf,
 	*err = EINVAL;
 	return ((size_t)-1);
 }
+#endif
 
 uid_t
 crgetuid(const cred_t *cr)
