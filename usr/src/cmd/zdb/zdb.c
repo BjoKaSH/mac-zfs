@@ -2129,9 +2129,14 @@ vdev_child_string_match(nvlist_t *vdev, char *tgt)
 	verify(nvlist_lookup_nvlist_array(vdev, ZPOOL_CONFIG_CHILDREN,
 	    &child, &children) == 0);
 	for (c = 0; c < children; ++c) {
+#ifdef __APPLE__
+		if (nvlist_string_match(child[c], ZPOOL_CONFIG_PATH, tgt))
+			return (B_TRUE);
+#else
 		if (nvlist_string_match(child[c], ZPOOL_CONFIG_PATH, tgt) ||
 		    nvlist_string_match(child[c], ZPOOL_CONFIG_DEVID, tgt))
 			return (B_TRUE);
+#endif
 	}
 	return (B_FALSE);
 }
