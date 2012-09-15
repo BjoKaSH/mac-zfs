@@ -429,6 +429,8 @@ cv_broadcast(kcondvar_t *cv)
  * them by adding '/' in front of the path.
  */
 
+uint64_t get_disk_size(int fd);
+
 /*ARGSUSED*/
 int
 vn_open(char *path, int x1, int flags, int mode, vnode_t **vpp, int x2, int x3)
@@ -497,9 +499,14 @@ vn_open(char *path, int x1, int flags, int mode, vnode_t **vpp, int x2, int x3)
  */
 #ifdef __APPLE__
       if (S_ISBLK(st.st_mode)) {
-		  if ((st.st_size = get_disk_size(fd)) == -1) {
+		  assert(sizeof(st.st_size) == 8);
+		  assert(sizeof(off_t) == 8);
+		  uint64_t tmp = get_disk_size(fd);
+		  if (tmp == -1) {
 			  st.st_size = 0;
 			  return (errno);
+		  } else {
+			  st.st_size = tmp;
 		  }
 	  }
 #endif
