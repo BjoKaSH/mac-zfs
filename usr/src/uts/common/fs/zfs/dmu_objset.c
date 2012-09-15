@@ -286,6 +286,7 @@ dmu_objset_open(const char *name, dmu_objset_type_t type, int mode,
 		err = dmu_objset_open_impl(dsl_dataset_get_spa(ds),
 		    ds, &ds->ds_phys->ds_bp, &osi);
 		if (err) {
+			mutex_exit(&ds->ds_opening_lock);
 			dsl_dataset_close(ds, mode, os);
 			kmem_free(os, sizeof (objset_t));
 			return (err);
