@@ -1008,9 +1008,15 @@ again:
 		if (zp->z_unlinked) {
 			err = ENOENT;
 		} else {
-			VN_HOLD(ZTOV(zp));
-			*zpp = zp;
-			err = 0;
+      if (vp == NULL && skipvnode == 0)
+        zfs_attach_vnode(zp);
+        VN_HOLD(ZTOV(zp));
+      }
+      /* no else, since in case skipvnode is != NULL, we must ignore
+       *  any potentially existing vnode.  skipvnode != NULL explicitly
+       *  ask us to not touch a vnode. */
+      *zpp = zp;
+      err = 0;
 		}
 		dmu_buf_rele(db, NULL);
 		mutex_exit(&zp->z_lock);
