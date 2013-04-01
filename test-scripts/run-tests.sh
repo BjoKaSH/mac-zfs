@@ -37,6 +37,8 @@ if [ ${has_fstest} -eq 1 ] ; then
 fi
 
 
+trap "interact '(err)'" EXIT
+
 # Test sequence:
 # - create single-disk pool in default config, using disk-based vdev "vd1"
 #   - verify it auto mounts
@@ -100,38 +102,18 @@ if [ ${has_fstest} -eq 1 ] ; then
 fi
 
 
-# - create large (>8 MB), compressible (factor > 2) file as "tf1"
+# - create large (>8 MB), file as "tf1"
 #   - verify space accounting
 
 run_cmd_log -t 0 get_fs_stats stat_p1_a p1
-run_ret 0 -t 1 "Creating 8m file (random, compressible)" make_file -c 2 8m _temp_ tf0
+run_ret 0 -t 1 "Creating 8m file (random)" make_file 8m _temp_ tf0
 run_ret 0 -t 2 "Copying file to pool fs" copy_file tf0 p1 tf1
 
-run_cmd_log -t 0 get_file_stats stat_tf1_b tf1
-run_cmd_log -t 1 get_fs_stats stat_p1_b p1
-diff_fs_stats stat_p1_diff1  stat_p1_a  stat_p1_b
-run_ret_start 0 -t 2 "verify space accounting" check_sizes_fs  stat_p1_diff1  8m  
-run_ret_end 0 "checking file sizes" check_sizes_file  stat_tf1_b  8m
-
-# - enable compression
-run_ret 0 "Enabling compression" zfs set compression=on ${pool1}
-
-# - write same file under new name "tf2" again
-#   - verify it got compressed
-#   - verify du, df, ls and stat return sensible values
-#   - verify content of uncompressed file
-
-run_cmd_log -t 0 get_fs_stats stat_p1_tf2_a  p1
-run_ret_start 0 -t 1 "Writing same 8m file, then checking compression" copy_file tf1 p1 tf2
-calc_comp_fact tf0
-run_cmd_log -t 2 get_file_stats stat_tf2 tf2
-print_file_stats  stat_tf2
-run_ret_next 0 -t 3 "verifying file size" check_sizes_file -c ${file_tf0_compfact}  stat_tf2  8m
-run_cmd_log -t 4 get_fs_stats stat_p1_tf2_b  p1
-diff_fs_stats  stat_p1_tf2_diff1  stat_p1_tf2_a  stat_p1_tf2_b
-run_ret_next 0 -t 5 "verifying fs size" check_sizes_fs -c ${file_tf0_compfact}  stat_p1_tf2_diff1 8m 
-run_ret_next 0 "comparing content of uncompressed file"  cmp ${file_tf0_path} ${file_tf1_path}
-run_ret_end 0 "comparing content of compressed file" cmp ${file_tf0_path} ${file_tf2_path}
+#run_cmd_log -t 0 get_file_stats stat_tf1_b tf1
+#run_cmd_log -t 1 get_fs_stats stat_p1_b p1
+#diff_fs_stats stat_p1_diff1  stat_p1_a  stat_p1_b
+#run_ret_start 0 -t 2 "verify space accounting" check_sizes_fs  stat_p1_diff1  8m
+#run_ret_end 0 "checking file sizes" check_sizes_file  stat_tf1_b  8m
 
 # - create snapshot "sn1"
 # - set copies = 2
@@ -141,93 +123,86 @@ run_ret_end 0 "comparing content of compressed file" cmp ${file_tf0_path} ${file
 
 run_ret 0 "Creating snapshot sn1"  zfs snapshot -r  ${pool1}@sn1
 run_check_regex 0 "Verifying snapshot is present"  "${pool1}@sn1" zfs list -t snapshot
+clone_files -s  p1  p1@sn1
 
 run_ret 0 "Seting copies property to 2" zfs set copies=2 ${pool1}
 run_check_regex 0 "Verifying copies property"  "2" zfs get copies ${pool1}
 
-run_cmd_log -t 0 get_fs_stats stat_p1_tf3_a  p1
-run_ret_start 0 "Writing same 8m file again, as tf3" copy_file tf0 p1 tf3
-run_cmd_log -t 2 get_fs_stats stat_p1_tf3_b  p1
-diff_fs_stats  stat_p1_tf3_diff1  stat_p1_tf3_a  stat_p1_tf3_b
-print_fs_stats stat_p1_tf3_diff1
-run_ret_next 0 -t 3 "verifying fs size" check_sizes_fs -c ${file_tf0_compfact}  stat_p1_tf3_diff1 8m 
-run_cmd_log -t 4 get_file_stats stat_tf3 tf3
-print_file_stats  stat_tf3
-run_ret_end 0 -t 5 "verifying file size" check_sizes_file -c ${file_tf0_compfact}  stat_tf3  8m
+#run_cmd_log -t 0 get_fs_stats stat_p1_tf3_a  p1
+#run_ret_start 0 "Writing same 8m file again, as tf3" copy_file tf0 p1 tf3
+#run_cmd_log -t 2 get_fs_stats stat_p1_tf3_b  p1
+#diff_fs_stats  stat_p1_tf3_diff1  stat_p1_tf3_a  stat_p1_tf3_b
+#print_fs_stats stat_p1_tf3_diff1
+#run_ret_next 0 -t 3 "verifying fs size" check_sizes_fs -c ${file_tf0_compfact}  stat_p1_tf3_diff1 8m
+#run_cmd_log -t 4 get_file_stats stat_tf3 tf3
+#print_file_stats  stat_tf3
+#run_ret_end 0 -t 5 "verifying file size" check_sizes_file -c ${file_tf0_compfact}  stat_tf3  8m
 
+run_ret 0 "Writing same 8m file again, as tf3" copy_file tf0 p1 tf3
 
 # - create snapshot "sn2"
 run_ret 0 "Creating snapshot sn2"  zfs snapshot -r  ${pool1}@sn2
 run_check_regex 0 "Verifying snapshot is present"  "${pool1}@sn2" zfs list -t snapshot
-
-
-# - disable compression
-#   - verify content of compressed file
-run_ret 0 "Disabling compression" zfs set compression=off ${pool1}
-run_ret 0 "comparing content of compressed file" cmp ${file_tf0_path} ${file_tf2_path}
+clone_files -s  p1  p1@sn2
 
 
 # - create dump of "sn1" (zfs send)
-stream1fifo=$(new_fifo)
 stream1=$(new_temp_file)
-cat ${stream1fifo} >${stream1} &
-run_ret 0 "creating dump of snapshot sn1 ..."  zfs send ${pool1}@sn1 >${stream1fifo}
+run_ret 0 "creating dump of snapshot sn1 ..."  zfs_send ${stream1} p1@sn1
 
 
 # - delete "tf3"
 #   - verify space accounting
-run_cmd_log -t 0 get_fs_stats stat_p1_tf3_c  p1
-run_ret_start 0 "Removing tf3"  remove_file tf3
-run_cmd_log -t 2 get_fs_stats stat_p1_tf3_d  p1
-diff_fs_stats  stat_p1_tf3_diff2  stat_p1_tf3_c  stat_p1_tf3_d
-print_fs_stats stat_p1_tf3_diff2
-run_ret_end 0 -t 3 "verifying fs size" check_sizes_fs -c ${file_tf0_compfact}  stat_p1_tf3_diff2 -8m 
+#run_cmd_log -t 0 get_fs_stats stat_p1_tf3_c  p1
+run_ret 0 "Removing tf3"  remove_file -k tf3
+#run_cmd_log -t 2 get_fs_stats stat_p1_tf3_d  p1
+#diff_fs_stats  stat_p1_tf3_diff2  stat_p1_tf3_c  stat_p1_tf3_d
+#print_fs_stats stat_p1_tf3_diff2
+#run_ret_end 0 -t 3 "verifying fs size" check_sizes_fs -c ${file_tf0_compfact}  stat_p1_tf3_diff2 -8m
 
 
 # - create snapshot "sn3"
 run_ret 0 "Creating snapshot sn3"  zfs snapshot -r  ${pool1}@sn3
 run_check_regex 0 "Verifying snapshot is present"  "${pool1}@sn3" zfs list -t snapshot
+clone_files -s  p1  p1@sn3
 
 
 # - create incremental dump of "sn3" against "sn2"
-stream2fifo=$(new_fifo)
 stream2=$(new_temp_file)
-cat ${stream2fifo} >${stream2} &
-run_ret 0 "creating dump of snapshot sn3 against sn2 ..."  zfs send -i ${pool1}@sn2 ${pool1}@sn3 >${stream2fifo}
+run_ret 0 "creating dump of snapshot sn3 against sn2 ..."  zfs_send ${stream2} -i p1@sn2 p1@sn3
 
 
 # - delete "tf1"
 #   - verify space accounting
-run_cmd_log -t 0 get_fs_stats stat_p1_tf1_c  p1
-run_ret_start 0 "Removing tf1"  remove_file tf1
-run_cmd_log -t 2 get_fs_stats stat_p1_tf1_d  p1
-diff_fs_stats  stat_p1_tf1_diff2  stat_p1_tf1_c  stat_p1_tf1_d
-print_fs_stats stat_p1_tf1_diff2
-run_ret_end 0 -t 3 "verifying fs size" check_sizes_fs stat_p1_tf1_diff2 -8m 
+#run_cmd_log -t 0 get_fs_stats stat_p1_tf1_c  p1
+run_ret 0 "Removing tf1"  remove_file -k tf1
+#run_cmd_log -t 2 get_fs_stats stat_p1_tf1_d  p1
+#diff_fs_stats  stat_p1_tf1_diff2  stat_p1_tf1_c  stat_p1_tf1_d
+#print_fs_stats stat_p1_tf1_diff2
+#run_ret_end 0 -t 3 "verifying fs size" check_sizes_fs stat_p1_tf1_diff2 -8m
 
 
 # - create incremental dump of "sn2" against "sn1"
-stream3fifo=$(new_fifo)
 stream3=$(new_temp_file)
-cat ${stream3fifo} >${stream3} &
-run_ret 0 "creating dump of snapshot sn2 against sn1 ..."  zfs send -i ${pool1}@sn1 ${pool1}@sn2 >${stream3fifo}
+run_ret 0 "creating dump of snapshot sn2 against sn1 ..."  zfs_send ${stream3} -i p1@sn1 p1@sn2
 
 
 # - destroy "sn2"
 #   - verify space accounting
-run_cmd_log -t 0 get_fs_stats stat_p1_sn2_a  p1
-run_ret_start 0 "Destroying snapshot sn2" zfs destroy ${pool1}@sn2
-run_cmd_log -t 2 get_fs_stats stat_p1_sn2_b  p1
-diff_fs_stats  stat_p1_sn2_diff1  stat_p1_sn2_a  stat_p1_sn2_b
-print_fs_stats stat_p1_sn2_diff1
-run_ret_end 0 -t 3 "verifying fs size" check_sizes_fs stat_p1_tf1_diff2 -8m 
+#run_cmd_log -t 0 get_fs_stats stat_p1_sn2_a  p1
+run_ret 0 "Destroying snapshot sn2" zfs destroy ${pool1}@sn2
+#run_cmd_log -t 2 get_fs_stats stat_p1_sn2_b  p1
+#diff_fs_stats  stat_p1_sn2_diff1  stat_p1_sn2_a  stat_p1_sn2_b
+#print_fs_stats stat_p1_sn2_diff1
+#run_ret_end 0 -t 3 "verifying fs size" check_sizes_fs stat_p1_tf1_diff2 -8m
+forget_fs_files p1@sn2
 
 # - unmount
 # - rollback to "sn3"
 # - mount
 #   - verify file content
 #   - verify space accounting
-run_cmd_log -t 0 get_fs_stats stat_p1_rb_a  p1
+#run_cmd_log -t 0 get_fs_stats stat_p1_rb_a  p1
 
 run_ret 0 "Unmounting using diskutil"  diskutil umount ${pool1path}
 run_check_regex 0 "Verifying unmount" '-n' "${pool1}" mount
@@ -235,17 +210,17 @@ run_check_regex 0 "Verifying unmount" '-n' "${pool1}" mount
 run_ret_start 0 "Rolling back to sn3"  zfs rollback ${pool1}@sn3
 run_ret_end 0 "Mounting reseted pool"  zfs mount ${pool1}
 
-run_cmd_log -t 0 get_fs_stats stat_p1_rb_b  p1
-diff_fs_stats  stat_p1_rb_diff1  stat_p1_rb_a  stat_p1_rb_b
-print_fs_stats stat_p1_rb_diff1
-
+#run_cmd_log -t 0 get_fs_stats stat_p1_rb_b  p1
+#diff_fs_stats  stat_p1_rb_diff1  stat_p1_rb_a  stat_p1_rb_b
+#print_fs_stats stat_p1_rb_diff1
+resurrect_file tf1
 run_ret 0 "Verifying tf1 has re-appeared and unchanged contents"  cmp ${file_tf0_path}  ${file_tf1_path}
 
 
 #
 # - add second device in stripe mode (sparsebundle, band-size 2MB) as "vd2"
 
-run_ret 0 "Create disk vd2" make_disk 5 vd2 2
+run_ret 0 "Create disk vd2" make_disk 3 vd2 2
 attach_disk vd2
 run_ret 0 "Adding new vdev in stripe mode"  zpool add ${pool1} ${disk_vd2_disk}s2
 
@@ -284,25 +259,10 @@ done
 run_ret 0 "Checking pool status" zpool status -v ${pool1}
 
 
-# - destory 75% of added device "vd2" (write random data)
-# - scrub pool, verifying that copies have been placed on different disks.
-run_ret 0 "Damaging 75% of data in disk vd2" damage_disk 75 vd2
-
-run_ret 0 "Starting scrub"  zpool scrub ${pool1}
-
-echo "waiting for scrub to complete ..."
-while sleep 5 ; do
-    if zpool status ${pool1} | grep -e "complet" -e "finish" >/dev/null ; then
-        break;
-    fi
-done
-
-run_ret 0 "Checking pool status" zpool status -v ${pool1}
-
-
 # - replace 2nd drive with file-based vdev "vd3"
 run_ret_start 0 "Replacing vd2: making new file-vdev"  make_file 1m _temp_ vd3file
-dd if=/dev/zero of=${file_vd3file_path} bs=$((1024*1024)) count=$((1024*3))
+echo "Growing file for new vdev to 3G. This may take some minutes ..."
+dd if=/dev/zero of=${file_vd3file_path} bs=$((1024*1024)) oseek=2048 count=1024
 run_ret_end 0 "Initiating disk replacement"  zpool replace ${pool1} ${disk_vd2_disk}s2 ${file_vd3file_path}
 
 
@@ -316,6 +276,8 @@ done
 
 run_ret 0 "Checking pool status" zpool status -v ${pool1}
 
+# make a 1g file, so following attache will take some time
+run_ret 0 "Making 1 GB file (or 30 secs worth of data), so the following resilver when converting to a mirror will take some time."  make_file -T 30 1024m p1 large1g
 
 # - make first vdev "vd1" into mirror, adding disk-based vdev "vd4"
 run_ret 0 "Creating new disk vd4" make_disk 5 vd4 8
@@ -330,13 +292,15 @@ run_check_regex 0 "Verifying export" '-n' "${pool1}" zpool list
 # - import
 #   - verify resilver continues
 #   - wait until resilver completes
-run_ret 0 "re-import pool"  zpool import ${pool1}
+# the pool contains a file vdev, so we need to specify where to look
+# for vdevs
+run_ret 0 "re-import pool"  zpool import -d /dev -d $(dirname ${file_vd3file_path}) ${pool1}
 run_check_regex 0 "Verifying it is resilvering" "resilver" zpool status ${pool1}
 
 # - wait until resilver is complete
 echo "waiting for resilver to complete ..."
 while sleep 5 ; do
-    if zpool status ${pool1} | grep -e "complet" -e "finish" >/dev/null ; then
+    if zpool status ${pool1} | grep -e "completed" -e "finished" >/dev/null ; then
         break;
     fi
 done
@@ -344,19 +308,10 @@ done
 run_ret 0 "Checking pool status" zpool status -v ${pool1}
 
 
-# - destroy 15% of original device "vd1"
-run_ret 0 "Destroying 15% of vd1" damage_disk 15 vd1
-
-
-# - read "tf1" to "tf3" until zpool status shows errors
-dd if=${file_tf1_path}  of=/dev/null
-dd if=${file_tf3_path}  of=/dev/null
-run_ret 0 "Checking pool status after read from damaged device" zpool status -v
-
- 
 # - create snapshot "sn4"
 run_ret 0 "Creating snapshot sn4" zfs snapshot ${pool1}@sn4
 run_check_regex 0 "Verifying snapshot is present"  "${pool1}@sn4" zfs list -t snapshot
+clone_files -s  p1  p1@sn4
 
 
 # - create set of 16 random files in one directory, file content length
@@ -380,13 +335,12 @@ run_check_regex 0 "Verifying it is resilvering" "resilver" zpool status ${pool1}
 # - create snapshot "sn5"
 run_ret 0 "Creating snapshot sn5" zfs snapshot ${pool1}@sn5
 run_check_regex 0 "Verifying snapshot is present"  "${pool1}@sn5" zfs list -t snapshot
+clone_files -s  p1  p1@sn5
 
 
 # - dump snapshot "sn4" incremental against "sn3"
-stream4fifo=$(new_fifo)
 stream4=$(new_temp_file)
-cat ${stream4fifo} >${stream4} &
-run_ret 0 "creating dump of snapshot sn4 against sn3 ..."  zfs send -i ${pool1}@sn3 ${pool1}@sn4 >${stream4fifo}
+run_ret 0 "creating dump of snapshot sn4 against sn3 ..."  zfs_send ${stream4} -i p1@sn3 p1@sn4
 
 
 # - replace 1st vdev "vd1" with new disk-based vdev "vd6"
@@ -401,7 +355,7 @@ run_check_regex 0 "Verifying it is resilvering" "resilver" zpool status ${pool1}
 
 echo "waiting for resilver to complete ..."
 while sleep 5 ; do
-    if zpool status ${pool1} | grep -e "complet" -e "finish" >/dev/null ; then
+    if zpool status ${pool1} | grep -e "scrub:.*\(complet\|finish\)" >/dev/null ; then
         break;
     fi
 done
@@ -409,50 +363,79 @@ done
 run_ret 0 "Checking pool status" zpool status -v ${pool1}
 
 
-
 # - create sub-fs "fs11" with copies = 1
+#   - verify it mounted
+run_ret 0 "Create sub-fs" make_fs p1/fs11  -o copies=1 
+run_check_regex 0 "Verifying mount" "${pool1}/fs11" mount
+
+pool1fs11path=$(get_val fs p1/fs11 path)
+
 # - create set of 16 random files in "fs11", file content length
 #   between 3 and 11 kB
-#   - verify space accounting
-# - create snapshot "sn6"
-# - delete 8 of the files in "fs11"
-# - create snapshot "sn7"
-# - clone snapshot "sn6" as "cl1"
-# - verify file content in "cl1"
-# - create set of 4 additional files in "cl1" ind directory "cl1/d1"
-# - verify space accounting
-# - delete 2 files in "cl1/d1" and 2 in "cl1"
-# - verify space accounting
-# - create snapshot "sn8"
-# - dump snapshot "sn5" incremental against "sn4"
-# - dump snapshot "sn6" incremental against "sn5"
-# - dump snapshot "sn7" incremental against "sn6"
-# - dump snapshot "sn8" incremental against "sn7"
-# - destroy clone "cl1"
-# - unmount
-# - destroy "sn8"
-# - destroy "sn7"
-# - rollback to "sn6"
-# - mount
-# - create snapshot "sn9"
+filetestfiles[0]=filetest2
+run_ret_start 0 "Creating 16 random files in 1 directory ..." mkdir -v ${pool1fs11path}/${filetestfiles[0]}
+for ((ii1=1; ii1 < 17; ii1++)) ; do
+    filetestfiles[$ii1]=${filetestfiles[0]}/$(make_name 8 127)
+    run_ret_next 0 "Making file" make_file $(get_rand_number 3 11)k p1/fs11 ${filetestfiles[$ii1]}
+done
+run_ret_end 0 "Done creating 16 files"  true
+
+
+# - set new mountpoint
+#   - verify it moved
+run_abort 0 mkdir -v ${testbase_maczfs}/mnt
+run_ret 0 "Altering mountpoint for fs11"  zfs set mountpoint=${testbase_maczfs}/mnt $(get_val fs p1/fs11 fullname)
+run_check_regex 0 "Verifying mount" "${pool1}/fs11.*${testbase_maczfs}/mnt" mount
+
+
+# - export pool
+# - import pool
+#   - verify mount points
+run_ret 0 "Exporting pool '${pool1}' withou prior unmount" zpool export ${pool1}
+run_check_regex 0 "Verifying export" '-n' "${pool1}" zpool list
+
+run_ret 0 "Reimporting pool '${pool1}'" zpool import ${pool1}
+run_check_regex 0 "Verifying import" "${pool1}" mount
+
+run_check_regex 0 "Verifying mount" "${pool1}/fs11.*${testbase_maczfs}/mnt" mount
+
+
+# - clone sn3 as new fs fs1sn3
+# - verify file tf3
+# - delete tf3
+# - destroy clone fs1sn3
+run_ret 0 "cloning sn3 as fs1sn3" make_clone_fs p1@sn3 p1/fs1sn3
+
+run_check_regex 0 "Verifying mount" "${pool1}/fs1sn3" mount
+
+#run_ret 0 "" resurrect_file tf1  p1/fs1sn3
+
+echo run_ret 0 "Checking file tf1 re-apperaed and has right content"  cmp $(get_val file p1/fs1sn3/tf1 path) ${file_tf0_path}
+run_ret 0 "listing clone" ls -laRF $(get_val fs p1/fs1sn3 path)
+echo run_ret 0 "Deleting tf3 from clone" remove_file -k tf3
+
+run_ret 0 "Destroying clone" zfs destroy ${pool1}/fs1sn3
+
+forget_fs p1/fs1sn3
+
+
 #
 # - run "manyfs" test (adapted from Alex' version)
-# - create snapshot "sn10"
-# - dump snapshot "sn8" incremental against "sn6"
 #
 # - create new pool "p2" on "vd1"
 # - receive snapshots "sn1" to "sn4", one by one
 #   - after each receive, verify files
-#   - after each receive, verify space accounting
-# - add vdev "vd2" to pool "p2" in stripe mode
-# - receive snapshots "sn1" to "sn4", one by one
-#   - after each receive, verify files
-#   - after each receive, verify space accounting
-#
+
 # - destroy pool "p2"
 # - destroy pool "p1"
 # - try to unload kext.
+
+run_ret 0 "Destroying pool p1" destroy_pool p1
+#run_ret 0 "Unloading kern module " sudo kextunload org.maczfs.bjokash.zfs
+
 #
 # Done
+
+trap - EXIT
 
 # End
