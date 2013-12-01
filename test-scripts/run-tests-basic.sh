@@ -8,7 +8,7 @@ export LC_ALL=C
 # set defaults
 poolbase=pool_$(date +%s)_$$
 has_fstest=0
-genrand_bin=./support/genrand
+genrand_bin=./test-scripts/genrand
 #
 # check for local config file
 conf=maczfs-tests.conf
@@ -59,7 +59,9 @@ ${genrand_bin} -s 13446 -S ${genrand_state}
 tests_func_init_done=1
 
 # load various helper functions
-source ./support/tests-functions.sh
+source ./test-scripts/tests-functions.sh
+
+trap "interact '(err)'" EXIT
 
 # Test sequence:
 # - create single-disk pool in default config, using disk-based vdev "vd1"
@@ -447,7 +449,7 @@ run_check_regex 0 "Verifying mount" "${pool1}/fs1sn3" mount
 #run_ret 0 "" resurrect_file tf1  p1/fs1sn3
 
 echo run_ret 0 "Checking file tf1 re-apperaed and has right content"  cmp $(get_val file p1/fs1sn3/tf1 path) ${file_tf0_path}
-run_ret 0 "listing clone" ls -laRF $(get_val fs p1/fs1sn3 path)
+run_cmd_log ls -laRF $(get_val fs p1/fs1sn3 path)
 echo run_ret 0 "Deleting tf3 from clone" remove_file -k tf3
 
 run_ret 0 "Destroying clone" zfs destroy ${pool1}/fs1sn3
@@ -467,9 +469,11 @@ forget_fs p1/fs1sn3
 # - try to unload kext.
 
 run_ret 0 "Destroying pool p1" destroy_pool p1
-run_ret 0 "Unloading kern module " sudo kextunload org.maczfs.bjokash.zfs
+#run_ret 0 "Unloading kern module " sudo kextunload org.maczfs.bjokash.zfs
 
 #
 # Done
+
+trap - EXIT
 
 # End
