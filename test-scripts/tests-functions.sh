@@ -34,7 +34,9 @@
 # return: 0 or 1
 # globals: last_cmd_retval
 
-if [ -z "${tests_func_init_arr}" ] ; then
+export LC_ALL=C
+
+if [ -z "${tests_func_init_arr:-}" ] ; then
 poolsmax=0
 pools[0]=''
 fssmax=0
@@ -2321,6 +2323,8 @@ function run_ret() {
     fi
 
     if [ ${stop_on_fail} -eq 1 -a ${retval} -ne 0 ] ; then
+        interact
+    elif [ ${stop_on_fail} -eq 2 -a ${isfail} -ne 0 ] ; then
         exit 1
     fi
 
@@ -2424,6 +2428,8 @@ function run_check_regex() {
     fi
 
     if [ ${stop_on_fail} -eq 1 -a ${isfail} -ne 0 ] ; then
+        interact
+    elif [ ${stop_on_fail} -eq 2 -a ${isfail} -ne 0 ] ; then
         exit 1
     fi
 
@@ -2523,7 +2529,7 @@ function tests_func_init() {
     fi
 
     if [ -z "${genrand_bin}" ] ; then
-        genrand_bin=$(dirname $0)/genrand
+        genrand_bin="${test_scripts_dir}/genrand"
     fi
 
     if [ ! -x "${genrand_bin}" ] ; then
@@ -2549,10 +2555,15 @@ function tests_func_init() {
     subfailcnt=0
     subokcnt=0
     cursubtest=0
-    tottests=0
     curtest=0
 
-    stop_on_fail=0
+    if [ -z "${stop_on_fail:-}" ] ; then
+        stop_on_fail=0
+    fi
+
+    if [ -z "${tottests:-}" ] ; then
+        tottests=0
+    fi
 
     tests_func_init_done=1
 }
@@ -2620,6 +2631,10 @@ function tests_func_cleanup() {
     unset tests_func_init_arr
     unset tests_func_init_done
 }
+
+if [-z "${test_scripts_dir:-}" ] ; then
+    test_scripts_dir="$(dirname "$0")"
+fi
 
 
 function interact() {
