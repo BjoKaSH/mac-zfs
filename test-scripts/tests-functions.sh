@@ -54,14 +54,14 @@ fi
 # size_in_gb disk_name [ band size ]
 # globals:
 # disk_${name}_attached # 1 if attached, else 0
-# disk_${name}_disk     # device name of disk if attached, else '' 
+# disk_${name}_disk     # device name of disk if attached, else ''
 # disk_${name}_size     # size in GB
 # disk_${name}_path     # path to sparse bundle directory
 function make_disk() {
     local size=$1
     local name=$2
     local res=0
-    
+
     if [ "$1" == "-h" ] ; then
         echo "size_in_gb disk_name [ band size ]"
         return 0
@@ -104,7 +104,7 @@ function make_disk() {
 # disk_name
 # globals:
 # disk_${name}_attached # 1 if attached, else 0
-# disk_${name}_disk     # device name of disk if attached, else '' 
+# disk_${name}_disk     # device name of disk if attached, else ''
 # disk_${name}_size     # size in GB
 # disk_${name}_path     # path to sparse bundle directory
 function destroy_disk() {
@@ -119,7 +119,7 @@ function destroy_disk() {
     fi
 
     tmp_v=disk_${name}_idx
-    
+
     if [ -z "${!tmp_v}" ] ; then
         echo "Nothing known about disk '${name}'"
         return 0
@@ -174,7 +174,7 @@ function list_disks() {
 # percent disk_name
 # globals:
 # disk_${name}_attached # 1 if attached, else 0
-# disk_${name}_disk     # device name of disk if attached, else '' 
+# disk_${name}_disk     # device name of disk if attached, else ''
 function damage_disk() {
     local percent=$1
     local name=$2
@@ -192,7 +192,7 @@ function damage_disk() {
     local minsize
     local maxsize
     local was_attached
-    
+
 
     if [ "$1" == "-h" ] ; then
         echo "percent diskname"
@@ -203,22 +203,22 @@ function damage_disk() {
         echo "$0 disk image not found" 1>&2
         return 1
     fi
-    
+
     echo "Damage_disk not implemented!"
 
     return 0
 
 
-# we need to figure out how many iterations we need to do.  The criteria 
+# we need to figure out how many iterations we need to do.  The criteria
 # are:
 # Damage at most 4096 bytes (1 AF hardware sector) per iteration.
-# Damage at least 32 bytes per iteration (we do not do single-byte or 
+# Damage at least 32 bytes per iteration (we do not do single-byte or
 # bit damages).
-# Do at least 50 iterations or 5 per percent, whichever is more.  Relaxe 
-# minimum damage size of 32 bytes to 16 bytes if necessary, but not 
+# Do at least 50 iterations or 5 per percent, whichever is more.  Relaxe
+# minimum damage size of 32 bytes to 16 bytes if necessary, but not
 # further.
 #
-# We first calc a lower limit on the number of iterations, based on disk 
+# We first calc a lower limit on the number of iterations, based on disk
 # size, percentage of damage and max damage per iteration
 
     # size of disk
@@ -232,7 +232,7 @@ function damage_disk() {
     fi
     miniterations=$(echo "${damagesize}/4096" | bc)
     maxiterations=$(echo "${damagesize}/32" | bc)
-    
+
     if [ ${miniterations} -lt ${miniterations_1} ] ; then
         maxsize=$(echo "${damagesize}/miniterations_1" | bc)
         if [ ${maxsize} -lt 16 ] ; then
@@ -255,14 +255,14 @@ function damage_disk() {
 
     # here minsize, maxsize, miniterations and maxiterations are fixed.
 
-    # now we do a loop, randomly varying damage size per iteration 
-    # between minsize and maxsize and randomly selecting damage start 
+    # now we do a loop, randomly varying damage size per iteration
+    # between minsize and maxsize and randomly selecting damage start
     # positions.  We repeate the loop until we have written damagesize
     # bytes of random data to the disk device (or its file backend).
-    
-    
-    
-    
+
+
+
+
 # first determine number of blocks in disk
 # split into 4096 extends
 # repeat for percent times:
@@ -279,7 +279,7 @@ function damage_disk() {
         # them, so the following attach will not trigger a mount or an import
         was_attached=0
     fi
-    
+
     echo "Damage_disk not implemented!"
 
     return 0
@@ -451,7 +451,7 @@ function make_pool() {
     eval pool_${poolname}_fullname="\"\${poolfullname}\""
     eval pool_${poolname}_path="\"/Volumes/\${poolfullname}\""
     eval pool_${poolname}_vdevs="\"\$*\""
-    
+
     for i in $* ; do
         tmp=${i%%:*}
         disk_v=disk_${tmp//\//_}_idx
@@ -488,7 +488,7 @@ function make_pool() {
 
 # destroy named zfs pool
 # args:
-# poolname 
+# poolname
 # globals:
 # pool_${poolname}_opt=...   : options used
 # pool_${poolname}_fullname= : pool name with pool prefix
@@ -541,7 +541,7 @@ function destroy_pool() {
     done
 
     pools[${poolidx}]=""
-    
+
     return $res
 }
 
@@ -612,7 +612,7 @@ function make_fs() {
     zfs create ${opt} ${fsfullname}
 
     res=$?
-    
+
     if [ ${res} -eq 0 ] ; then
         fss[${fssmax}]=${fsname_tr}
         eval fs_${fsname_tr}_idx=${fssmax}
@@ -668,7 +668,7 @@ function make_clone_fs() {
     zfs clone ${opt}  ${poolbase}_${snname} ${fsfullname}
 
     res=$?
-    
+
     if [ ${res} -eq 0 ] ; then
         fss[${fssmax}]=${fsname_tr}
         eval fs_${fsname_tr}_idx=${fssmax}
@@ -711,7 +711,7 @@ function forget_fs() {
     done
 
     fss[${fsidx}]=""
-    
+
     return 0
 }
 
@@ -725,7 +725,7 @@ function list_fss() {
     local name
     local poolname=""
     local tmp_v
-    
+
     if [ "$1" == "-h" ] ; then
         echo "[ poolname ]"
         return 0
@@ -786,7 +786,7 @@ function zfs_send() {
 # [ -c comp_factor ] [ -T max_secs ] size fs file [ rel_file_path]
 # -c comp_factor : try to make the file contents compressible by factor comp_factor
 # size  : size of file in bytes, optionaly with multiplier "m" or "k", example: 8m
-# -T max_secs    : spend at most max_secs second, trying to generate $size bytes 
+# -T max_secs    : spend at most max_secs second, trying to generate $size bytes
 # fs    : zfs filesystem to place file in.  if special name _temp_ is used, then place file in ${TMPDIR}
 # file  : filename (optionally with path prefix) relative to zfs filesystem.
 #         this is just a handle to the file, not necessaryly its path, see next argument
@@ -843,7 +843,7 @@ function make_file() {
     else
         filerelpath=${3}
     fi
-    
+
     if [ "${size: -1:1}" == "m" ] ; then
         # 1m bytes makes 1024*256 longs
         count=$((${size%m}*1024*256))
@@ -882,7 +882,7 @@ function make_file() {
         ${genrand_bin} -v -S ${genrand_state} -T ${maxsecs} -c ${size} -b -o -t >${filepath}
         res=$?
     fi
-    
+
     if [ $res -eq 0 ] ; then
         eval file_${filename_tr}_size=${size}
         eval file_${filename_tr}_fs=${fs}
@@ -1014,13 +1014,13 @@ function copy_file() {
 
     destname=${3}
     destname_tr=${destname//\//_}
-    
+
     if [ $# -gt 3 ] ; then
         destrelpath="${4}"
     else
         destrelpath="${3}"
     fi
-    
+
     if [ "${srcname_tr}" == "${destname_tr}" ] ; then
         echo "Error: test system limitation: can't have to files with same name in different file systems."
         return 1
@@ -1031,7 +1031,7 @@ function copy_file() {
             break
         fi
     done
-    
+
     if [ ${srcidx} -eq ${filesmax} ] ; then
         echo "copy_file(): Nothing known about '${srcname}'."
         return 1
@@ -1051,7 +1051,7 @@ function copy_file() {
             break
         fi
     done
-    
+
     fs_tr=${fs//\//_}
     name_v=fs_${fs_tr}_path
     destpath="${!name_v}/${destrelpath}"
@@ -1117,7 +1117,7 @@ function remove_file() {
             break
         fi
     done
-    
+
     if [ ${fileidx} -eq ${filesmax} ] ; then
         echo "remove_file(): Nothing known about '${filename}'."
         return 1
@@ -1131,7 +1131,7 @@ function remove_file() {
         echo "File already removed (file is a ghost entry)."
         return 0
     fi
-    
+
     rm "${filepath}"
     res=$?
     if [ ${res} -eq 0 -a ! -e "${filepath}" ] ; then
@@ -1276,7 +1276,7 @@ function resurrect_file() {
             break
         fi
     done
-    
+
     if [ ${fileidx} -eq ${filesmax} ] ; then
         echo "resurrect_file(): Nothing known about '${filename}'."
         return 1
@@ -1326,7 +1326,7 @@ function forget_file() {
             break
         fi
     done
-    
+
     if [ ${fileidx} -eq ${filesmax} ] ; then
         echo "forget_file(): Nothing known about '${filename}'."
         return 1
@@ -1353,7 +1353,7 @@ function forget_file_impl() {
     for i in size fs name path compfact idx ghost; do
         eval unset file_${filename_tr}_${i}
     done
-    
+
     files[${fileidx}]=''
 }
 
@@ -1444,7 +1444,7 @@ function get_file_stats() {
     local st_blksize
     local st_blocks
     local st_flags
-    
+
     local i
     for i in $(stat -s ${filepath}) ; do
         eval $i
@@ -1464,7 +1464,7 @@ function get_file_stats() {
 
 # print file status meta data
 # args:
-# stats_array_name  : name of variable holding the state data, see 
+# stats_array_name  : name of variable holding the state data, see
 #    get_file_stats()
 function print_file_stats() {
     local tmp_v=""
@@ -1608,7 +1608,7 @@ function get_fs_stats() {
 
 # print file system status meta data
 # args:
-# stats_array_name  : name of variable holding the state data, see 
+# stats_array_name  : name of variable holding the state data, see
 #    get_fs_stats()
 function print_fs_stats() {
     local tmp_v=""
@@ -1700,7 +1700,7 @@ function diff_fs_stats() {
 # [ -c compfact ] diff_stat_array  size
 # -c compfact : expected compression factor of file
 # diff_stat_array : result from diff_fs_stats()
-# size  : uncompressed file size added to or removed from file system 
+# size  : uncompressed file size added to or removed from file system
 # globals:
 # ${diff_array}_pool   = copied from stats_1_array
 # ${diff_array}_name   = copied from stats_1_array
@@ -1740,7 +1740,7 @@ function check_sizes_fs() {
 
     echo "Warning: check_sizes_fs() not implemented"
     return 0
-    
+
 #    blockcount=$( echo "(${sizecomp} / ${blocksize}) + 1" | bc)
 
 }
@@ -1751,7 +1751,7 @@ function check_sizes_fs() {
 # [ -c compfact ] diff_stat_array  size
 # -c compfact : expected compression factor of file
 # diff_stat_array : result from diff_fs_stats()
-# size  : uncompressed file size added to or removed from file system 
+# size  : uncompressed file size added to or removed from file system
 # globals:
 # ${diff_array}_pool   = copied from stats_1_array
 # ${diff_array}_name   = copied from stats_1_array
@@ -1790,7 +1790,7 @@ function check_sizes_file() {
 
     echo "Warning: check_sizes_file() not implemented"
     return 0
-    
+
 #    blockcount=$( echo "(${sizecomp} / ${blocksize}) + 1" | bc)
 
 }
@@ -1942,7 +1942,7 @@ function run_cmd() {
 # diskname
 # globals:
 # disk_${name}_attached # 1 if attached, else 0
-# disk_${name}_disk     # device name of disk if attached, else '' 
+# disk_${name}_disk     # device name of disk if attached, else ''
 function attach_disk() {
     local name=${1}
     local diskpath_v=disk_${name}_path
@@ -1962,7 +1962,7 @@ function attach_disk() {
         return 1
     fi
 
-    outfile=$(new_temp_file) 
+    outfile=$(new_temp_file)
     run_cmd --outname ${outfile} hdiutil attach -nomount ${diskpath}
 
     if [ $? -ne 0 ] ; then
@@ -1990,7 +1990,7 @@ function attach_disk() {
 # diskname
 # globals:
 # disk_${name}_attached # 1 if attached, else 0
-# disk_${name}_disk     # device name of disk if attached, else '' 
+# disk_${name}_disk     # device name of disk if attached, else ''
 function detach_disk() {
     local name=${1}
     local disk_v=disk_${name}_disk
@@ -2014,7 +2014,7 @@ function detach_disk() {
         return 1
     fi
 
-    outfile=$(new_temp_file) 
+    outfile=$(new_temp_file)
     run_cmd --outname ${outfile} hdiutil detach ${disk}
 
     if [ $? -ne 0 ] ; then
@@ -2035,7 +2035,7 @@ function detach_disk() {
 # disk_name
 # globals:
 # disk_${name}_attached # 1 if attached, else 0
-# disk_${name}_disk     # device name of disk if attached, else '' 
+# disk_${name}_disk     # device name of disk if attached, else ''
 function partion_disk() {
     local name=$1
     local was_attached=0
@@ -2071,7 +2071,7 @@ function partion_disk() {
         attach_disk ${name}
     fi
 
-    gpt create /dev/${disk} 
+    gpt create /dev/${disk}
     gpt add -s 409600 -t efi  /dev/${disk}
     gpt label -i 1 -l "EFI System Partition"  /dev/${disk}
     gpt add -t zfs /dev/${disk}
@@ -2324,7 +2324,7 @@ function run_ret() {
 
     if [ ${stop_on_fail} -eq 1 -a ${retval} -ne 0 ] ; then
         interact
-    elif [ ${stop_on_fail} -eq 2 -a ${isfail} -ne 0 ] ; then
+    elif [ ${stop_on_fail} -eq 2 -a ${retval} -ne 0 ] ; then
         exit 1
     fi
 
@@ -2396,7 +2396,7 @@ function run_check_regex() {
 
     shift
     shift
-    if [ "$1" == "-n" ] ; then 
+    if [ "$1" == "-n" ] ; then
         negate=1
         isfail=0
         shift
@@ -2421,7 +2421,7 @@ function run_check_regex() {
             isfail=${negate}
         fi
     fi
-    
+
     if [ ! -z "${message}" ] ; then
         print_count_ok_fail ${isfail}
         print_run_cmd_logs
@@ -2573,8 +2573,13 @@ function tests_func_cleanup() {
     local tmp_v
     local fsname
 
+    if [ ${tests_func_init_arr:-0} -eq 0 ] ; then
+        echo "System is not initialized.  Skipping cleanup."
+        return 0
+    fi
+
     stop_on_fail=0
-    
+
     for ((i=0; i < poolsmax; i++)) ; do
         if [ "${pools[i]}" == "" ] ; then
             continue
@@ -2614,7 +2619,7 @@ function tests_func_cleanup() {
             continue
         fi
         name="${disks[i]}"
-        
+
         tmp_v=disk_${name}_attached
         if [ "1" == "${!tmp_v}" ] ; then
             detach_disk ${name}
@@ -2630,7 +2635,7 @@ function tests_func_cleanup() {
     unset tests_func_init_done
 }
 
-if [-z "${test_scripts_dir:-}" ] ; then
+if [ -z "${test_scripts_dir:-}" ] ; then
     test_scripts_dir="$(dirname "$0")"
 fi
 
@@ -2642,7 +2647,7 @@ function tests_std_setup() {
     genrand_bin=./test-scripts/genrand
     #
     # check for local config file
-    # must be first argument 
+    # must be first argument
     conf=maczfs-tests.conf
     if [ "${1:-}" == "-C" ] ; then
         conf="${2:-}"
@@ -2676,7 +2681,7 @@ function tests_std_setup() {
             var=${i#*:}
             if [ "${1:-}" == "${key}" ] ; then
                 shift
-                ${var}="${1:-}"
+                eval ${var}=\"\${1:-}\"
                 shift
                 keyfound=1
                 break
@@ -2687,11 +2692,6 @@ function tests_std_setup() {
             exit 1
         fi
     done
-
-    # make sure diskstore is set, otherwise bad things will happen
-    if [ ! -d "${diskstore}" ] ; then
-        diskstore=$(mktemp -d -t diskstore_)
-    fi
 
     if [ ! -x "${genrand_bin}" ] ; then
         echo "Warning: random number generator not found / executable.  Trying to rebuild."

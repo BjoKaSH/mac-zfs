@@ -5,7 +5,7 @@ tests_func_init_done=0
 
 # load various helper functions
 if [ -z "${test_scripts_dir:-}" ] ; then
-    test_scripts_dir=."$(dirname "$0")"
+    test_scripts_dir="$(dirname "$0")"
 fi
 test_scripts_lib=${test_scripts_dir}/tests-functions.sh
 if [ ! -f "${test_scripts_lib}" ] ; then
@@ -28,7 +28,7 @@ has_fstest=0
 fstest_suite=run-fstest.sh
 
 # initialize test system and parse arguments
-tests_std_setup
+tests_std_setup "$@"
 
 tottests=82
 
@@ -365,7 +365,7 @@ run_ret 0 "Checking pool status" zpool status -v ${pool1}
 
 # - create sub-fs "fs11" with copies = 1
 #   - verify it mounted
-run_ret 0 "Create sub-fs" make_fs p1/fs11  -o copies=1 
+run_ret 0 "Create sub-fs" make_fs p1/fs11  -o copies=1
 run_check_regex 0 "Verifying mount" "${pool1}/fs11" mount
 
 pool1fs11path=$(get_val fs p1/fs11 path)

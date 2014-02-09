@@ -5,7 +5,7 @@ tests_func_init_done=0
 
 # load various helper functions
 if [ -z "${test_scripts_dir:-}" ] ; then
-    test_scripts_dir=."$(dirname "$0")"
+    test_scripts_dir="$(dirname "$0")"
 fi
 test_scripts_lib=${test_scripts_dir}/tests-functions.sh
 if [ ! -f "${test_scripts_lib}" ] ; then
@@ -27,7 +27,7 @@ extra_args="--fstest_suite:fstest_suite"
 fstest_suite=run-fstest.sh
 
 # initialize test system and parse arguments
-tests_std_setup
+tests_std_setup "$@"
 
 # start test sequence
 
