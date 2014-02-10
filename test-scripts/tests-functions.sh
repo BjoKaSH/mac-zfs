@@ -2511,17 +2511,106 @@ function print_object() {
     done
 }
 
-function tests_func_init() {
+# Create one of our internal work directories
+#
+# args:
+#   user-supplied dir
+#   fallback
+# result_args:
+#   name of variable to hold created name.  set to "" if no directory
+#       was creasted, else the creatd name.
+# result
+#   0: dir is usable, 1: someting went wrong
+function tests_func_create_dir() {
+    local user_spec="${1:-}"
+    local def_spec="${2}"
+    local res_var="${3}"
+    local res_name=""
+    local res=0
 
-    if [ ! -z "${tests_tmpdir}" ] ; then
-        export TMPDIR=${tests_tmpdir}
+    if [ ! -z "${user_spec}" ] ; then
+        if [ ! -e "${user_spec}" ] ; then
+            if mkdir "${user_spec}" ; then
+                res_name="${user_spec}"
+                echo $$ >"${user_spec}/.maczfs_test_dir"
+            fi
+        fi
+        if [ ! -d "${user_spec}" ] ; then
+            echo "Specified directory '${user_spec}' isn't a directory."
+            res=1
+        fi
     else
-        tests_tmpdir=$(mktemp -d -t tests_maczfs_)
+        res_name=$(mktemp -d -t ${def_spec})
+        echo $$ >"${res_name}/.maczfs_test_dir"
+    fi
+
+    eval ${res_var}=\"\${res_name}\"
+
+    return ${res}
+}
+
+
+# Create directory specified in the given variable name, if it does not
+# exists.  If given variable is empty, create default directory.  Update
+# given variable to reflect final directory name.  If the directory
+# could not be created (or the variable referes to an existing
+# non-directory) return failure and delete all directories previously
+# created, else return true and record created directory in global
+# variable "init_created_dirs" and increment global "init_created_dirs_cnt".
+#
+# args:
+#   variable name.  Named variable hold desired directory name or is empty.
+#   default name.  String of default directory name
+#
+# First arg is also used as return parameter, the variable is updated if
+# the default name is used.
+#
+# Global variables:
+#   init_created_dirs[].  If a directory is created, it will be appended.
+#   init_created_dirs_cnt.  Number of members is init_created_dirs.
+#
+# Return
+#   0: Success
+#   1: Failure.  I case of failure, all directories _created_ so far
+#      have been deleted again.
+function tests_func_create_dir_2() {
+    local user_var="$1"
+    local def_val="$2"
+    local init_new_dir=""
+    local i=0
+
+    if ! tests_func_create_dir  "${!user_var}"  "${def_val}"  init_new_dir ; then
+        if [ ${init_created_dirs_cnt} -gt 0 ] ; then
+            for i in "${init_created_dirs[@]}" ; do
+                rm -r "${i}"  || true
+            done
+        fi
+        return 1
+    else
+        if [ ! -z "${init_new_dir}" ] ; then
+            eval ${user_var}=\"\${init_new_dir}\"
+            init_created_dirs[${init_created_dirs_cnt}]="${init_new_dir}"
+            ((init_created_dirs_cnt++))
+        fi
+    fi
+    return 0
+}
+
+
+function tests_func_init() {
+    local -a init_created_dirs
+    local init_created_dirs_cnt=0
+
+    if ! tests_func_create_dir_2  tests_tmpdir  tests_maczfs_  ; then
+        echo "Abort."
+        exit 1
+    else
         export TMPDIR=${tests_tmpdir}
     fi
 
-    if [ -z "${tests_logdir}" ] ; then
-        tests_logdir=$(mktemp -d -t test_logs_maczfs_)
+    if ! tests_func_create_dir_2  tests_logdir  test_logs_maczfs_  ; then
+        echo "Abort."
+        exit 1
     fi
 
     if [ -z "${genrand_bin}" ] ; then
@@ -2537,11 +2626,22 @@ function tests_func_init() {
     genrand_state=${tests_logdir}/randstate.txt
     ${genrand_bin} -s 13446 -S ${genrand_state}
 
-    if [ ! -d "${diskstore}" ] ; then
-        diskstore=$(mktemp -d -t diskstore_)
+    if ! tests_func_create_dir_2  diskstore  diskstore_  ; then
+        echo "Abort."
+        exit 1
     fi
 
-    mkdir -v ${diskstore}/dev || exit 1
+    if ! mkdir -v "${diskstore}/dev" ; then
+        if [ ! -d "${diskstore}/dev" ] ; then
+            echo "Failed to create '${diskstore}/dev'.  Abort."
+            if [ ${init_created_dirs_cnt} -gt 0 ] ; then
+                for i in "${init_created_dirs[@]}" ; do
+                    rm -r "${i}"  || true
+                done
+            fi
+            exit 1
+        fi
+    fi
 
     if [ -z "${poolbase}" ] ; then
         poolbase=pool_$(date +%s)_$$
@@ -2704,6 +2804,11 @@ function tests_std_setup() {
     fi
 
     tests_func_init
+
+    echo "Setup:"
+    for i in tests_tmpdir tests_logdir diskstore ; do
+        echo -e "'${i}'\t : '${!i}'"
+    done
 }
 
 
