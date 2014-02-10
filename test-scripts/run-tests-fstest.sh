@@ -71,6 +71,8 @@ print_count_ok_fail ${res}
 run_ret 0 "Destroying pool p1" destroy_pool p1
 #run_ret 0 "Unloading kern module " sudo kextunload org.maczfs.bjokash.zfs
 
+tests_std_teardown -k
+
 #
 # Done
 

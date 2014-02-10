@@ -2812,6 +2812,33 @@ function tests_std_setup() {
 }
 
 
+function tests_std_teardown() {
+    local i
+    local keeptmp=0
+
+    if [ $# -ge 1 -a "${1}" == "-k" ] ; then
+        keeptmp=1
+    else
+        read -p "Keep temporary directories? (y/N)" ANS
+        if [ "${ANS}" == "y" ] ; then
+            keeptmp=1
+        fi
+    fi
+
+    tests_func_cleanup
+
+    if [ ${keeptmp} -eq 0 ] ; then
+        for i in "${tests_tmpdir}"  "${diskstore}"  "${tests_logdir}" ; do
+            if [ -d "${i}" -a -e "${i}/.maczfs_test_dir" ] ; then
+                rm -vr "${i}"
+            else
+                echo "Directory '${i}' not created by us.  Not deleted."
+            fi
+        done
+    fi
+}
+
+
 function interact() {
     local prompttxt="(check)"
     local cmd
