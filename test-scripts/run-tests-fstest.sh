@@ -27,6 +27,7 @@ extra_args="--fstest_suite:fstest_suite"
 fstest_suite=run-fstest.sh
 
 # initialize test system and parse arguments
+stop_on_fail=1 # shell (0 continue, 2 just abort, 3 abort & clean up)
 tests_std_setup "$@"
 
 # start test sequence

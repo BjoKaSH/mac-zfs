@@ -2765,7 +2765,7 @@ function tests_std_setup() {
         echo "   --temp    directory for temporary files and directories"
         echo "   --logdir  directory for log files"
         echo "   --genrand path to binary of random number generator"
-        echo "   --stop_on_fail   drop into shell in case of failed test (0 =  no, continue; 1 = enter shell; 2 = abort)"
+        echo "   --stop_on_fail   drop into shell in case of failed test (0 =  no, continue; 1 = enter shell; 2 = abort; 3 abort & cleanup)"
         echo "${extra_args_help_long:-}"
         exit 1
     fi
@@ -2805,6 +2805,14 @@ function tests_std_setup() {
 
     tests_func_init
 
+    if [ ${stop_on_fail} -eq 3 ] ; then
+        stop_on_fail=2
+        trap "tests_std_teardown -k" EXIT
+        tests_func_init_trap=1
+    else
+        tests_func_init_trap=0
+    fi
+
     echo "Setup:"
     for i in tests_tmpdir tests_logdir diskstore ; do
         echo -e "'${i}'\t : '${!i}'"
@@ -2815,6 +2823,10 @@ function tests_std_setup() {
 function tests_std_teardown() {
     local i
     local keeptmp=0
+
+    if [ ${tests_func_init_trap} -eq 1 ] ; then
+        trap EXIT
+    fi
 
     if [ $# -ge 1 -a "${1}" == "-k" ] ; then
         keeptmp=1

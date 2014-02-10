@@ -29,6 +29,7 @@ has_fstest=0
 fstest_suite=run-fstest.sh
 
 # initialize test system and parse arguments
+stop_on_fail=3 # abort & clean up (0 continue, 1 shell, 2 just abort)
 tests_std_setup "$@"
 
 tottests=82
