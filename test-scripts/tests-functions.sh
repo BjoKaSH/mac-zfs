@@ -2613,6 +2613,11 @@ function tests_func_init() {
         exit 1
     fi
 
+    if ! tests_func_create_dir_2  testbase_maczfs  testbase_maczfs_  ; then
+        echo "Abort."
+        exit 1
+    fi
+
     if [ -z "${genrand_bin}" ] ; then
         genrand_bin="${test_scripts_dir}/genrand"
     fi
@@ -2776,7 +2781,7 @@ function tests_std_setup() {
 
     while [ $# -ge 1 ] ; do
         keyfound=0
-        for i in --diskstore:diskstore  --poolbase:poolbase  --temp:tests_tmpdir  --logdir:tests_logdir  --genrand:genrand_bin  ${extra_args:-} ; do
+        for i in --diskstore:diskstore  --poolbase:poolbase  --testbase:testbase_maczfs  --temp:tests_tmpdir  --logdir:tests_logdir  --genrand:genrand_bin  --stop_on_fail:stop_on_fail  ${extra_args:-} ; do
             key=${i%:*}
             var=${i#*:}
             if [ "${1:-}" == "${key}" ] ; then
@@ -2788,7 +2793,7 @@ function tests_std_setup() {
             fi
         done
         if [ ${keyfound} -eq 0 ] ; then
-            echo "Error: Unknown argument '${key}'.  Try --help"
+            echo "Error: Unknown argument '${1}'.  Try --help"
             exit 1
         fi
     done
@@ -2814,7 +2819,7 @@ function tests_std_setup() {
     fi
 
     echo "Setup:"
-    for i in tests_tmpdir tests_logdir diskstore ; do
+    for i in testbase_maczfs tests_tmpdir tests_logdir diskstore ; do
         echo -e "'${i}'\t : '${!i}'"
     done
 }
@@ -2842,7 +2847,7 @@ function tests_std_teardown() {
     tests_func_cleanup
 
     if [ ${keeptmp} -eq 0 ] ; then
-        for i in "${tests_tmpdir}"  "${diskstore}"  "${tests_logdir}" ; do
+        for i in "${diskstore}"  "${tests_logdir}"  "${testbase_maczfs}"  "${tests_tmpdir}" ; do
             if [ -d "${i}" -a -e "${i}/.maczfs_test_dir" ] ; then
                 rm -vr "${i}"
             else
