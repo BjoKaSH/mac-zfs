@@ -38,6 +38,13 @@ if [ ${has_fstest} -eq 1 ] ; then
     tottests=$(($tottest+1))
 fi
 
+installed_exit_trap=0
+if [ "$(trap -p EXIT)" == "" ] ; then
+    # make sure we cleanup behind us
+    trap "tests_std_teardown" EXIT
+    installed_exit_trap=1
+fi
+
 # Test sequence:
 # - create single-disk pool in default config, using disk-based vdev "vd1"
 #   - verify it auto mounts
@@ -432,6 +439,9 @@ forget_fs p1/fs1sn3
 run_ret 0 "Destroying pool p1" destroy_pool p1
 #run_ret 0 "Unloading kern module " sudo kextunload org.maczfs.bjokash.zfs
 
+if [ ${installed_exit_trap} -eq 1 ] ; then
+    trap - EXIT
+fi
 tests_std_teardown -k
 
 #
