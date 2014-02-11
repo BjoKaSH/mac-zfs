@@ -19,8 +19,8 @@ fi
 source ${test_scripts_dir}/tests-functions.sh
 
 # define arguments specific to this set of tests
-extra_args_help_short=" [ --fstest_suite path-to-fstest-script ] "
-extra_args_help_long="   --fstest_suite path  path to script that executes fstest in the current directory"
+extra_args_help_short=" [ --fstest_suite path-to-fstest-repository ] "
+extra_args_help_long="   --fstest_suite path  path to fstest repository which contains the 'fstest' binary"
 extra_args="--fstest_suite:fstest_suite"
 
 # defaults for above arguments
@@ -32,6 +32,23 @@ tests_std_setup "$@"
 
 # start test sequence
 
+# verify fstest can be found
+if [ ! -x "${fstest_suite}/fstest" ] ; then
+    echo "Could not find 'fstest'."
+    echo "Specify path to fstest repository using '--fstest_suite'."
+    echo "You can get it here: https://github.com/BjoKaSH/fstest.git"
+    echo "Stopping now."
+    tests_std_teardown -d
+    exit 1
+fi
+if [ "${fstest_suite:0:1}" != "/" ] ; then
+    # relative path, make absolute, because we are going to chdir later
+    fstest_suite_dir="$(dirname "${fstest_suite}")"
+    pushd "${fstest_suite_dir}"
+    fstest_suite="$(pwd)"
+    popd
+fi
+
 run_ret 0 "Create disk vd1" make_disk 5 vd1 8
 attach_disk vd1
 #run_ret 0 "Partition disk vd1" partion_disk vd1
@@ -39,6 +56,8 @@ attach_disk vd1
 run_ret 0 "Create zpool ${pool1} with vdev vd1 at ${vd1_disk}s2" make_pool p1 vd1:2
 pool1=${pool_p1_fullname}
 pool1path=${pool_p1_path}
+
+echo "Will run some basic sanity checks ..."
 
 run_check_regex 0 "Checking it auto-mounted" "${pool1}" mount
 
@@ -55,15 +74,38 @@ mdutil -i off /Volumes/${pool1}
 echo "Waiting 5 secs for Spotlight & Co to move on"
 sleep 5
 
+run_ret 0 "Creating work directory 'fstest'"  mkdir -v ${pool1path}/fstest
 
 # - run fstest in subdir of pool
 
 echo "Running fstest suite ..."
 ((curtest++))
-mkdir ${pool1path}/fstest
 pushd ${pool1path}/fstest
-run_ret 0 "" run-fstest.sh
+
+fstest_log=${tests_logdir}/fstest-log-$(date +%Y-%m-%d-%H%M%S)
+if ! mkdir ${fstest_log} ; then
+    echo "Can't create log directory, giving up."
+    tests_std_teardown
+    exit 1
+fi
+echo "fstest requires root permission. will use sudo."
+echo "Enter your administration password if prompted by sudo."
+
+# Generate list of available tests
+sudo prove --timer -v -D -r ${fstest_suite} >testlist.txt
+# Execute tests one-by-one, syncing often to keep as much log data as possible in case of a panic.
+while read n ; do
+    t="${n#/*/tests/}" ;
+    t2="${t/\//_}" ;
+    sudo verbose=1 prove --timer -v  $n 2>&1 | tee ${fstest_log}/${t2};
+    sync ;
+    sleep 1 ;
+done <testlist.txt
+grep -e 'not ok' -e '^#' -r ${fstest_log} >fail.txt
 res=$?
+cp testlist.txt  ${fstest_log}/testlist.txt
+cp fail.txt  ${fstest_log}/fail.txt
+
 popd
 echo -n "Completed fstest suite"
 print_count_ok_fail ${res}
