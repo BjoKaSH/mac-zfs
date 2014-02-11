@@ -2830,6 +2830,8 @@ function tests_std_teardown() {
 
     if [ $# -ge 1 -a "${1}" == "-k" ] ; then
         keeptmp=1
+    elif [ $# -ge 1 -a "${1}" == "-d" ] ; then
+        keeptmp=0  # no-op, branch needed to suppress question 
     else
         read -p "Keep temporary directories? (y/N)" ANS
         if [ "${ANS}" == "y" ] ; then
